@@ -8,9 +8,10 @@ namespace Core.Player
     [RequireComponent(typeof(PlayerController))]
     public class PlayerInstance : MonoBehaviour
     {
-        [Inject] private PlayerTestConfig _config;
+        [Inject] private PlayerConfig _playerConfig;
         [SerializeField] private PlayerController _playerController;
-
+        
+        public PlayerConfig Stats => _playerConfig;
         public PlayerController PlayerController => _playerController;
 
         private void OnValidate()

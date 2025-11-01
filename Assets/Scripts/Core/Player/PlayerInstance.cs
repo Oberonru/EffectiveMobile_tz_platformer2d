@@ -1,16 +1,21 @@
 ﻿using Core.Configs.Player;
+using Core.Player.Components;
 using UnityEngine;
 using Zenject;
 
 namespace Core.Player
 {
+    [RequireComponent(typeof(PlayerController))]
     public class PlayerInstance : MonoBehaviour
     {
         [Inject] private PlayerTestConfig _config;
+        [SerializeField] private PlayerController _playerController;
 
-        private void Awake()
+        public PlayerController PlayerController => _playerController;
+
+        private void OnValidate()
         {
-            print(_config.PlayerName);
+            if (_playerController == null) _playerController = GetComponent<PlayerController>();
         }
     }
 }

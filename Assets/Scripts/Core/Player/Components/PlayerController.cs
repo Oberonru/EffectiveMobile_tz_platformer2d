@@ -1,4 +1,6 @@
-﻿using Core.Configs.Player;
+﻿using System;
+using Core.Configs.Player;
+using UniRx;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
@@ -12,6 +14,13 @@ namespace Core.Player.Components
         [Inject] private PlayerConfig _config;
         [SerializeField] private Transform _groundCheck;
 
+        public IObservable<bool> OnRun => _onRun;
+        private Subject<bool> _onRun = new();
+        public IObservable<Unit> OnJump => _onJump;
+        private Subject<Unit> _onJump = new();
+        public IObservable<Unit> OnAttack => _onAttack;
+        private Subject<Unit> _onAttack = new();
+
         private PlayerInput _playerInput;
         private InputAction _moveAction;
         private InputAction _jumpAction;
@@ -20,6 +29,7 @@ namespace Core.Player.Components
         private Rigidbody2D _rigidbody;
         private Vector2 _moveInput;
         private bool _isJumping;
+        private bool _isPrevRunning;
 
         private void Awake()
         {
@@ -34,6 +44,13 @@ namespace Core.Player.Components
         private void Update()
         {
             _moveInput = _moveAction.ReadValue<Vector2>();
+            
+            var isRunning = Mathf.Abs(_moveInput.x) > 0.1f && IsGrounded();
+            if (isRunning != _isPrevRunning)
+            {
+                _onRun?.OnNext(isRunning);
+                _isPrevRunning = isRunning;
+            }
 
             if (_jumpAction.triggered && IsGrounded())
             {
@@ -49,7 +66,7 @@ namespace Core.Player.Components
         private void FixedUpdate()
         {
             Move();
-
+            
             if (_isJumping && IsGrounded())
             {
                 Jump();
@@ -75,6 +92,8 @@ namespace Core.Player.Components
             var velocity = _rigidbody.velocity;
             velocity.y = _config.JumpForce;
             _rigidbody.velocity = velocity;
+            
+            _onJump?.OnNext(Unit.Default);
         }
 
         private void RotateToInput()
@@ -102,6 +121,7 @@ namespace Core.Player.Components
         private void Attack()
         {
             print("Attack");
+            _onAttack?.OnNext(Unit.Default);
         }
     }
 }

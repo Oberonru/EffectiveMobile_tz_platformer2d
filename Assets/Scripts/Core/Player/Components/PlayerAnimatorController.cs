@@ -7,7 +7,7 @@ namespace Core.Player.Components
     public class PlayerAnimatorController : MonoBehaviour
     {
         [SerializeField] Animator _animator;
-        [SerializeField] PlayerController _controller;
+        [SerializeField] private PlayerInstance _player;
 
         private static readonly int JumpHash = Animator.StringToHash("Jump");
         private static readonly int SpeedHash = Animator.StringToHash("Speed");
@@ -16,24 +16,30 @@ namespace Core.Player.Components
 
         private void OnEnable()
         {
-            _controller.OnJump.
+            _player.PlayerController.OnJump.
                 Subscribe(_ => _animator.SetTrigger(JumpHash)).
                 AddTo(this);
-            
-            _controller.OnAttack.
+
+            _player.PlayerController.OnAttack.
                 Subscribe(_ => _animator.SetTrigger(AttackHash)).
                 AddTo(this);
+
+            _player.PlayerHealth.OnDead.
+                Subscribe(_ => _animator.SetBool(DeathHash, true)).
+                AddTo(this);
         }
-        
+
         private void OnValidate()
         {
             if (_animator == null) _animator = GetComponent<Animator>();
-            if (_controller == null) _controller = GetComponent<PlayerController>();
+            if (_player == null) _player = GetComponent<PlayerInstance>();
+            
         }
 
         private void Update()
         {
-            _animator.SetFloat(SpeedHash, Mathf.Abs(_controller.VelocityX));
+            if (_player.PlayerController.IsGrounded())
+                _animator.SetFloat(SpeedHash, Mathf.Abs(_player.PlayerController.VelocityX));
         }
     }
 }

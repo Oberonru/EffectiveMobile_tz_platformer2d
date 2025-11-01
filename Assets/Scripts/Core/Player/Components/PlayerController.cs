@@ -59,6 +59,14 @@ namespace Core.Player.Components
             }
         }
 
+        public bool IsGrounded()
+        {
+            var hit = Physics2D.Raycast(_groundCheck.position, Vector2.down, _config.GroundCheckDistance, ~0);
+
+            return hit.collider != null && !hit.collider.isTrigger &&
+                   hit.normal.y >= _config.GroundNormalThreshold;
+        }
+
         private void FixedUpdate()
         {
             Move();
@@ -104,14 +112,6 @@ namespace Core.Player.Components
                 transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y,
                     transform.localScale.z);
             }
-        }
-
-        private bool IsGrounded()
-        {
-            var hit = Physics2D.Raycast(_groundCheck.position, Vector2.down, _config.GroundCheckDistance, ~0);
-
-            return hit.collider != null && !hit.collider.isTrigger &&
-                   hit.normal.y >= _config.GroundNormalThreshold;
         }
 
         private void Attack()

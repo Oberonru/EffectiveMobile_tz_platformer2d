@@ -10,6 +10,8 @@ namespace Core.Player.Components
     public class PlayerController : MonoBehaviour
     {
         [Inject] private PlayerConfig _config;
+        [SerializeField] private Transform _groundCheck;
+        [SerializeField] private LayerMask _groundLayer;
 
         private PlayerInput _playerInput;
         private InputAction _moveAction;
@@ -34,7 +36,7 @@ namespace Core.Player.Components
         {
             _moveInput = _moveAction.ReadValue<Vector2>();
 
-            if (_jumpAction.triggered)
+            if (_jumpAction.triggered && IsGrounded())
             {
                 _isJumping = true;
             }
@@ -49,7 +51,7 @@ namespace Core.Player.Components
         {
             Move();
 
-            if (_isJumping)
+            if (_isJumping && IsGrounded())
             {
                 Jump();
                 _isJumping = false;
@@ -68,6 +70,14 @@ namespace Core.Player.Components
             var velocity = _rigidbody.velocity;
             velocity.y = _config.JumpForce;
             _rigidbody.velocity = velocity;
+        }
+
+        private bool IsGrounded()
+        {
+            var hit = Physics2D.Raycast(_groundCheck.position, Vector2.down, _config.GroundCheckDistance, ~0);
+
+            return hit.collider != null && !hit.collider.isTrigger &&
+                   hit.normal.y >= _config.GroundNormalThreshold;
         }
 
         private void Attack()

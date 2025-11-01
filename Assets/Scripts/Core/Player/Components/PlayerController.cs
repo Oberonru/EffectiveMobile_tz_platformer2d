@@ -11,7 +11,6 @@ namespace Core.Player.Components
     {
         [Inject] private PlayerConfig _config;
         [SerializeField] private Transform _groundCheck;
-        [SerializeField] private LayerMask _groundLayer;
 
         private PlayerInput _playerInput;
         private InputAction _moveAction;

@@ -14,8 +14,6 @@ namespace Core.Player.Components
         [Inject] private PlayerConfig _config;
         [SerializeField] private Transform _groundCheck;
 
-        public IObservable<bool> OnRun => _onRun;
-        private Subject<bool> _onRun = new();
         public IObservable<Unit> OnJump => _onJump;
         private Subject<Unit> _onJump = new();
         public IObservable<Unit> OnAttack => _onAttack;
@@ -31,6 +29,11 @@ namespace Core.Player.Components
         private bool _isJumping;
         private bool _isPrevRunning;
 
+        public float VelocityX
+        {
+            get => _rigidbody.velocity.x;
+        }
+
         private void Awake()
         {
             if (_playerInput == null) _playerInput = GetComponent<PlayerInput>();
@@ -44,13 +47,6 @@ namespace Core.Player.Components
         private void Update()
         {
             _moveInput = _moveAction.ReadValue<Vector2>();
-            
-            var isRunning = Mathf.Abs(_moveInput.x) > 0.1f && IsGrounded();
-            if (isRunning != _isPrevRunning)
-            {
-                _onRun?.OnNext(isRunning);
-                _isPrevRunning = isRunning;
-            }
 
             if (_jumpAction.triggered && IsGrounded())
             {
@@ -66,7 +62,7 @@ namespace Core.Player.Components
         private void FixedUpdate()
         {
             Move();
-            
+
             if (_isJumping && IsGrounded())
             {
                 Jump();
@@ -92,7 +88,7 @@ namespace Core.Player.Components
             var velocity = _rigidbody.velocity;
             velocity.y = _config.JumpForce;
             _rigidbody.velocity = velocity;
-            
+
             _onJump?.OnNext(Unit.Default);
         }
 

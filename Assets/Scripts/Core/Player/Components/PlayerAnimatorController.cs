@@ -10,7 +10,7 @@ namespace Core.Player.Components
         [SerializeField] PlayerController _controller;
 
         private static readonly int JumpHash = Animator.StringToHash("Jump");
-        private static readonly int RunHash = Animator.StringToHash("IsRun");
+        private static readonly int SpeedHash = Animator.StringToHash("Speed");
         private static readonly int AttackHash = Animator.StringToHash("Attack");
         private static readonly int DeathHash = Animator.StringToHash("Death");
 
@@ -18,11 +18,6 @@ namespace Core.Player.Components
         {
             _controller.OnJump.
                 Subscribe(_ => _animator.SetTrigger(JumpHash)).
-                AddTo(this);
-            
-            _controller.OnRun.
-                DistinctUntilChanged().
-                Subscribe(isRun => _animator.SetBool(RunHash,  isRun)).
                 AddTo(this);
             
             _controller.OnAttack.
@@ -34,6 +29,11 @@ namespace Core.Player.Components
         {
             if (_animator == null) _animator = GetComponent<Animator>();
             if (_controller == null) _controller = GetComponent<PlayerController>();
+        }
+
+        private void Update()
+        {
+            _animator.SetFloat(SpeedHash, Mathf.Abs(_controller.VelocityX));
         }
     }
 }

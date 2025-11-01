@@ -10,7 +10,7 @@ namespace Core.Player.Components
     public class PlayerController : MonoBehaviour
     {
         [Inject] private PlayerConfig _config;
-        
+
         private PlayerInput _playerInput;
         private InputAction _moveAction;
         private InputAction _jumpAction;
@@ -24,7 +24,7 @@ namespace Core.Player.Components
         {
             if (_playerInput == null) _playerInput = GetComponent<PlayerInput>();
             if (_rigidbody == null) _rigidbody = GetComponent<Rigidbody2D>();
-            
+
             _moveAction = _playerInput.actions["Move"];
             _jumpAction = _playerInput.actions["Jump"];
             _attackAction = _playerInput.actions["Attack"];
@@ -62,10 +62,12 @@ namespace Core.Player.Components
             rbVelocity.x = _moveInput.x * _config.Speed;
             _rigidbody.velocity = rbVelocity;
         }
-        
+
         private void Jump()
         {
-            _rigidbody.AddForce(Vector2.up * _config.JumpForce, ForceMode2D.Impulse);
+            var velocity = _rigidbody.velocity;
+            velocity.y = _config.JumpForce;
+            _rigidbody.velocity = velocity;
         }
 
         private void Attack()

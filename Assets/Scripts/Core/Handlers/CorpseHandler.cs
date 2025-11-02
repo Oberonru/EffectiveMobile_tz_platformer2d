@@ -1,9 +1,10 @@
 ﻿using System;
+using Core.Components;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 
-namespace Core.Components
+namespace Core.Handlers
 {
     [RequireComponent(typeof(HealthComponent))]
     public class CorpseHandler : MonoBehaviour

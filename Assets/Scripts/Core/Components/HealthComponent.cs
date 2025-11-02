@@ -47,6 +47,8 @@ namespace Core.Components
         {
             if (amount <= 0) return;
 
+            print("heal amount: " + amount);
+            
             _currentHealth = Mathf.Clamp(amount + _currentHealth, 0, _maxHealth);
             _onHealthChanged.OnNext(_currentHealth);
         }

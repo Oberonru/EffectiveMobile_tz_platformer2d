@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Core.Components;
 using UnityEngine;
 
-namespace Core.Components
+namespace Core.Handlers
 {
     [RequireComponent(typeof(HealthComponent))]
     public class StateComponentHandler : MonoBehaviour

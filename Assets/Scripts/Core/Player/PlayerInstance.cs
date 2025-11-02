@@ -1,5 +1,6 @@
 ﻿using Core.Components;
 using Core.Configs.Player;
+using Core.Handlers;
 using Core.Player.Components;
 using UnityEngine;
 using Zenject;
@@ -8,6 +9,7 @@ namespace Core.Player
 {
     [RequireComponent(typeof(CorpseHandler))]
     [RequireComponent(typeof(StateComponentHandler))]
+    [RequireComponent(typeof(ItemDetector))]
     [RequireComponent(typeof(PlayerController))]
     [RequireComponent(typeof(PlayerAnimatorController))]
     [RequireComponent(typeof(HealthComponent))]
@@ -17,11 +19,13 @@ namespace Core.Player
         [SerializeField] private PlayerController _playerController;
         [SerializeField] private PlayerAnimatorController _animatorController;
         [SerializeField] private HealthComponent _healthComponent;
+        [SerializeField] private ItemDetector _itemDetector;
         
         public PlayerConfig Stats => _config;
         public PlayerController PlayerController => _playerController;
         public PlayerAnimatorController AnimatorController => _animatorController;
         public HealthComponent Health => _healthComponent;
+        public ItemDetector ItemDetector => _itemDetector;
 
         private void Awake()
         {

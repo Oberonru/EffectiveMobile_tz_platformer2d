@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core.Items
 {
-    public class HealComponent : MonoBehaviour, IPickUp
+    public class Heal : MonoBehaviour, IPickUp
     {
         [SerializeField] private int _healAmount;
 

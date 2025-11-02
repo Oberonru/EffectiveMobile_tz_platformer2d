@@ -6,9 +6,10 @@ namespace Core.Items
 {
     public class Coin : MonoBehaviour, IPickUp
     {
+        [SerializeField] private int _nominal;
+
         public void PickUp(PlayerInstance player)
         {
-            print("coin picked up");
             Destroy(gameObject);
         }
     }

@@ -12,7 +12,7 @@ namespace Core.Player.Components
         private static readonly int JumpHash = Animator.StringToHash("Jump");
         private static readonly int SpeedHash = Animator.StringToHash("Speed");
         private static readonly int AttackHash = Animator.StringToHash("Attack");
-        private static readonly int DeathHash = Animator.StringToHash("Death");
+        private static readonly int DeathHash = Animator.StringToHash("IsDeath");
 
         private void OnEnable()
         {
@@ -25,7 +25,11 @@ namespace Core.Player.Components
                 AddTo(this);
 
             _player.Health.OnDead.
-                Subscribe(_ => _animator.SetBool(DeathHash, true)).
+                Subscribe(_ =>
+                {
+                    print("Death");
+                    _animator.SetBool(DeathHash, true);
+                }).
                 AddTo(this);
         }
 

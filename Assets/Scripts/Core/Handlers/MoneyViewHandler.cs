@@ -15,7 +15,6 @@ namespace Core.Handlers
             _player.DataHandler.OnMoneyChanged.DistinctUntilChanged().
                 Subscribe(money =>
                 {
-                    Debug.Log($"Money changed to {money}");
                     _view.SetMoney(money);
                 }).
                 AddTo(this);

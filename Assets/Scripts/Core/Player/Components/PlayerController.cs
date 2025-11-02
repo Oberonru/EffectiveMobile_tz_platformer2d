@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Components;
 using Core.Configs.Player;
 using UniRx;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace Core.Player.Components
 {
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(Rigidbody2D))]
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IStateComponent
     {
         [Inject] private PlayerConfig _config;
         [SerializeField] private Transform _groundCheck;
@@ -118,6 +119,16 @@ namespace Core.Player.Components
         {
             print("Attack");
             _onAttack?.OnNext(Unit.Default);
+        }
+
+        public void Enable()
+        {
+            enabled = true;
+        }
+
+        public void Disable()
+        {
+            enabled = false;
         }
     }
 }

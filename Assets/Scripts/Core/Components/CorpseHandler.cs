@@ -9,6 +9,7 @@ namespace Core.Components
     public class CorpseHandler : MonoBehaviour
     {
         [SerializeField] private HealthComponent _healthComponent;
+        [SerializeField] private StateComponentHandler _stateHandler;
         [SerializeField] private float _destroyedTime = 0.5f;
 
         private void OnEnable()
@@ -23,6 +24,8 @@ namespace Core.Components
         {
             try
             {
+                _stateHandler.DisableAllComponents();
+                
                 await UniTask.Delay(TimeSpan.FromSeconds(_destroyedTime),
                     cancellationToken: this.GetCancellationTokenOnDestroy());
 

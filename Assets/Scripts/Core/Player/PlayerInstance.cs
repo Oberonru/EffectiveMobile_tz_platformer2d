@@ -7,10 +7,11 @@ using Zenject;
 namespace Core.Player
 {
     [RequireComponent(typeof(CorpseHandler))]
+    [RequireComponent(typeof(StateComponentHandler))]
     [RequireComponent(typeof(PlayerController))]
     [RequireComponent(typeof(PlayerAnimatorController))]
     [RequireComponent(typeof(HealthComponent))]
-    public class PlayerInstance : MonoBehaviour
+    public class PlayerInstance : MonoBehaviour, IStateComponent
     {
         [Inject] private PlayerConfig _config;
         [SerializeField] private PlayerController _playerController;
@@ -32,6 +33,16 @@ namespace Core.Player
         {
             if (_playerController == null) _playerController = GetComponent<PlayerController>();
             if (_animatorController == null) _animatorController = GetComponent<PlayerAnimatorController>();
+        }
+
+        public void Enable()
+        {
+            enabled = true;
+        }
+
+        public void Disable()
+        {
+            enabled = false;
         }
     }
 }

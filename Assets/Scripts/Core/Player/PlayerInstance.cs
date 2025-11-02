@@ -6,6 +6,7 @@ using Zenject;
 
 namespace Core.Player
 {
+    [RequireComponent(typeof(CorpseHandler))]
     [RequireComponent(typeof(PlayerController))]
     [RequireComponent(typeof(PlayerAnimatorController))]
     [RequireComponent(typeof(HealthComponent))]

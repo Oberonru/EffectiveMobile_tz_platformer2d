@@ -21,7 +21,6 @@ namespace Core.Components
         {
             if (other.TryGetComponent(out IPickUp pickUp))
             {
-                _itemObject.OnNext(null);
             }
         }
     }

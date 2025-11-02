@@ -11,6 +11,9 @@ namespace Core.Items
 
         public void PickUp(PlayerInstance player)
         {
+            print("Picked up coin _nominal" +  _nominal);
+            player.DataHandler.AddMoney(_nominal);
+            
             Destroy(gameObject);
         }
 

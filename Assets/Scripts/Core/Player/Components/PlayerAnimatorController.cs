@@ -24,7 +24,7 @@ namespace Core.Player.Components
                 Subscribe(_ => _animator.SetTrigger(AttackHash)).
                 AddTo(this);
 
-            _player.PlayerHealth.OnDead.
+            _player.Health.OnDead.
                 Subscribe(_ => _animator.SetBool(DeathHash, true)).
                 AddTo(this);
         }

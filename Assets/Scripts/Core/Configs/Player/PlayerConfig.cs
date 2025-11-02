@@ -11,13 +11,13 @@ namespace Core.Configs.Player
         [SerializeField] private float _groundCheckDistance = 0.1f;
         [SerializeField] private float _groundNormalThreshold = 0.65f;
         [SerializeField] private int _maxHealth = 5; 
-        [SerializeField] private int playerMultiply = 1; 
+        [SerializeField] private int playerLevel = 1; 
 
         public float Speed => _speed;
         public float JumpForce => _jumpForce;
         public float GroundCheckDistance => _groundCheckDistance;
         public float GroundNormalThreshold => _groundNormalThreshold;
         public int MaxHealth => _maxHealth;
-        public int PlayerMultiply => playerMultiply;
+        public int PlayerLevel => playerLevel;
     }
 }

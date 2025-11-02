@@ -19,11 +19,12 @@ namespace Core.Player
         public PlayerConfig Stats => _config;
         public PlayerController PlayerController => _playerController;
         public PlayerAnimatorController AnimatorController => _animatorController;
-        public HealthComponent PlayerHealth => _healthComponent;
+        public HealthComponent Health => _healthComponent;
 
-        private void Start()
+        private void Awake()
         {
-            _healthComponent.InitMaxHealth(_config.MaxHealth * _config.PlayerMultiply);
+            _healthComponent.InitMaxHealth(_config.MaxHealth + _config.PlayerLevel);
+            _healthComponent.CurrentHealth = _healthComponent.MaxHealth;
         }
 
         private void OnValidate()

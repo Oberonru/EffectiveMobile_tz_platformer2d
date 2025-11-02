@@ -1,0 +1,19 @@
+{
+    "name": "DevTools",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1a8a872e22528b5428d5cd36cdbf1499",
+        "GUID:3c9f8b2ac20301b4fa5dd14856fdd69d",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

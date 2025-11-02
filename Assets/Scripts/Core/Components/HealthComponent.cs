@@ -24,6 +24,8 @@ namespace Core.Components
             _maxHealth = maxHealth;
         }
 
+        public int MaxHealth => _maxHealth;
+        
         public int CurrentHealth
         {
             get => _currentHealth;

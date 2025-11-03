@@ -1,6 +1,7 @@
-﻿using Core.Components;
+﻿using Core.BaseComponents;
 using Core.Configs.Player;
 using Core.Handlers;
+using Core.Interfaces;
 using Core.Player.Components;
 using UnityEngine;
 using Zenject;

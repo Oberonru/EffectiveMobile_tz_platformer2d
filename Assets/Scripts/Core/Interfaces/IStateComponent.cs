@@ -1,4 +1,4 @@
-﻿namespace Core.Components
+﻿namespace Core.Interfaces
 {
     public interface IStateComponent
     {

@@ -1,4 +1,5 @@
-﻿using Core.Components;
+﻿using Core.BaseComponents;
+using Core.Interfaces;
 using UnityEngine;
 
 namespace Core.Handlers

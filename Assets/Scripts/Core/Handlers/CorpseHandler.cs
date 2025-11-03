@@ -1,5 +1,5 @@
 ﻿using System;
-using Core.Components;
+using Core.BaseComponents;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;

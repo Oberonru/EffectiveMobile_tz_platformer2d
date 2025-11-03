@@ -2,7 +2,7 @@
 using UniRx;
 using UnityEngine;
 
-namespace Core.Components
+namespace Core.Interfaces
 {
     public class ItemDetector : MonoBehaviour
     {

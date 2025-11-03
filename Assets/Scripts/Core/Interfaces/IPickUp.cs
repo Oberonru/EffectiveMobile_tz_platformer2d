@@ -1,6 +1,6 @@
 ﻿using Core.Player;
 
-namespace Core.Components
+namespace Core.Interfaces
 {
     public interface IPickUp
     {

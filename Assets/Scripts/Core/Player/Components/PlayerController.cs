@@ -1,8 +1,8 @@
 ﻿using System;
-using Core.Components;
 using Core.Configs.Audio;
 using Core.Configs.Player;
 using Core.Handlers;
+using Core.Interfaces;
 using UniRx;
 using UnityEngine;
 using UnityEngine.InputSystem;

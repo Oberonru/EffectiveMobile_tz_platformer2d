@@ -1,6 +1,6 @@
-﻿using Core.Components;
-using Core.Configs.Audio;
+﻿using Core.Configs.Audio;
 using Core.Handlers;
+using Core.Interfaces;
 using Core.Player;
 using UnityEngine;
 using Zenject;

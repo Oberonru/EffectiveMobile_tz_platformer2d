@@ -20,10 +20,11 @@ namespace Core.Player.Components
         {
             try
             {
+               InitHealth();
                 var data = await _storage.Load();
 
-                 await UniTask.WaitUntil(() => _storage.PlayerData != null);
-                 
+                await UniTask.WaitUntil(() => _storage.PlayerData != null);
+
                 _onMoney.Value = data.PlayerMoney;
             }
             catch (Exception e)
@@ -31,6 +32,7 @@ namespace Core.Player.Components
                 Console.WriteLine(e);
                 _onMoney.Value = 0;
             }
+
         }
 
         private void OnValidate()
@@ -43,6 +45,15 @@ namespace Core.Player.Components
             _storage.PlayerData.PlayerMoney += money;
 
             _onMoney.Value = _storage.PlayerData.PlayerMoney;
+        }
+
+        private void InitHealth()
+        {
+            var stats = _player.Stats;
+            var health = _player.Health;
+        
+            health.InitMaxHealth(stats.MaxHealth + stats.PlayerLevel);
+            health.CurrentHealth = stats.MaxHealth;
         }
     }
 }

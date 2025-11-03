@@ -35,12 +35,6 @@ namespace Core.Player
         public PlayerDataHandler DataHandler => _playerDataHandler;
         public PlayerCombatComponent CombatComponent => _playerCombatComponent;
 
-        private void Awake()
-        {
-            _healthComponent.InitMaxHealth(_config.MaxHealth + _config.PlayerLevel);
-            _healthComponent.CurrentHealth = _healthComponent.MaxHealth;
-        }
-
         private void OnValidate()
         {
             if (_playerController == null) _playerController = GetComponent<PlayerController>();

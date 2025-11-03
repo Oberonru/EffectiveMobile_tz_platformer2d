@@ -1,5 +1,6 @@
 ﻿using System;
 using Core.Components;
+using Core.Configs.Audio;
 using Core.Configs.Player;
 using Core.Handlers;
 using UniRx;
@@ -13,6 +14,8 @@ namespace Core.Player.Components
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerController : MonoBehaviour, IStateComponent
     {
+        [Inject] private IAudioHandler _handler;
+        [Inject] private AudioClipsConfig _clipsConfig;
         [Inject] private PlayerConfig _config;
         [SerializeField] private Transform _groundCheck;
 
@@ -98,7 +101,8 @@ namespace Core.Player.Components
             var velocity = _rigidbody.velocity;
             velocity.y = _config.JumpForce;
             _rigidbody.velocity = velocity;
-
+            
+            _handler.PlaySfx(_clipsConfig.Jumps);
             _onJump?.OnNext(Unit.Default);
         }
 
@@ -119,6 +123,7 @@ namespace Core.Player.Components
         private void Attack()
         {
             print("Attack");
+            _handler.PlaySfx(_clipsConfig.Attack);
             _onAttack?.OnNext(Unit.Default);
         }
 

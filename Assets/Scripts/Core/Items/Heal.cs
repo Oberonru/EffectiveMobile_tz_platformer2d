@@ -28,7 +28,7 @@ namespace Core.Items
 
             if (health.CurrentHealth == health.MaxHealth) return;
 
-            _handler.PlaySfx(_config.Jumps);
+            _handler.PlaySfx(_config.PickUpHeal);
             health.Heal(_healAmount);
             Destroy(gameObject);
         }

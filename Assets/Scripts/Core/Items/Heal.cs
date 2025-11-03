@@ -1,11 +1,16 @@
 ﻿using Core.Components;
+using Core.Configs.Audio;
+using Core.Handlers;
 using Core.Player;
 using UnityEngine;
+using Zenject;
 
 namespace Core.Items
 {
     public class Heal : MonoBehaviour, IPickUp
     {
+        [Inject] private IAudioHandler _handler;
+        [Inject] private AudioClipsConfig _config;
         [SerializeField] private int _healAmount;
         [SerializeField] private float _amplitude = 0.1f;
         [SerializeField] private float _speed = 1.0f;
@@ -23,6 +28,7 @@ namespace Core.Items
 
             if (health.CurrentHealth == health.MaxHealth) return;
 
+            _handler.PlaySfx(_config.Jumps);
             health.Heal(_healAmount);
             Destroy(gameObject);
         }

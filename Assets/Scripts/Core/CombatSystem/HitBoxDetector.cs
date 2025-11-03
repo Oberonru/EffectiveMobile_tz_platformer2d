@@ -1,10 +1,10 @@
 ﻿using System;
-using UnityEngine;
 using UniRx;
+using UnityEngine;
 
-namespace Core.BaseComponents
+namespace Core.CombatSystem
 {
-    public class HitBox : MonoBehaviour
+    public class HitBoxDetector : MonoBehaviour
     {
         public IObservable<HitBox> OnEnter => _onEnter;
         private Subject<HitBox> _onEnter = new();
@@ -15,10 +15,11 @@ namespace Core.BaseComponents
         public IObservable<HitBox> OnExit => _onExit;
         private Subject<HitBox> _onExit = new();
 
-        public void OnTriggerEnter(Collider other)
+        public void OnTriggerEnter2D(Collider2D other)
         {
             if (other.TryGetComponent(out HitBox box))
             {
+                print("on trigger enter" + other.name);
                 _onEnter.OnNext(box);
             }
         }
@@ -31,10 +32,12 @@ namespace Core.BaseComponents
             }
         }
 
-        public void OnTriggerExit(Collider other)
+        public void OnTriggerExit2D(Collider2D other)
         {
             if (other.TryGetComponent(out HitBox box))
             {
+                print("on trigger exit" + other.name);
+
                 _onExit.OnNext(box);
             }
         }

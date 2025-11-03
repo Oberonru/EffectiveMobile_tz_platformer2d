@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Core.Observers
 {
-    public class LevelMusicObserver : MonoBehaviour
+    public class LevelMusicController : MonoBehaviour
     {
         [Inject] private IAudioHandler _handler;
         [Inject] private AudioClipsConfig _config;

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Core.CombatSystem
 {
     [RequireComponent(typeof(Collider2D))]
-    public class HitBox : MonoBehaviour
+    public class HitBox : MonoBehaviour, IHitBox
     {
         public HealthComponent Health => _health;
         [SerializeField] private HealthComponent _health;

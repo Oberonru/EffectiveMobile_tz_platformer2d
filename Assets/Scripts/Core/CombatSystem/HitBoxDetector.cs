@@ -6,7 +6,7 @@ namespace Core.CombatSystem
 {
     public class HitBoxDetector : MonoBehaviour
     {
-        public IObservable<HitBox> OnEnter => _onEnter;
+        public IObservable<IHitBox> OnEnter => _onEnter;
         private Subject<HitBox> _onEnter = new();
 
         public IObservable<HitBox> OnStay => _onStay;

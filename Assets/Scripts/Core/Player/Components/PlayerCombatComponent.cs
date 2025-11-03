@@ -15,22 +15,18 @@ namespace Core.Player.Components
         private void OnEnable()
         {
             _detector.OnEnter.
-                DistinctUntilChanged().
                 Subscribe(hitBox => _target = hitBox.Health).
                 AddTo(this);
             
             _detector.OnStay.
-                DistinctUntilChanged().
                 Subscribe(hitBox => _target = hitBox.Health).
                 AddTo(this);
             
             _detector.OnExit.
-                DistinctUntilChanged().
                 Subscribe(hitBox => _target = null).
                 AddTo(this);
             
             _player.PlayerController.OnAttack.
-                DistinctUntilChanged().
                 Where(_ => _target != null).
                 Subscribe(_ => AttackHandle()).
                 AddTo(this);
@@ -39,6 +35,9 @@ namespace Core.Player.Components
         private void AttackHandle()
         {
             //TODO: add player damage field
+            
+            print(_target);
+            print(_target.CurrentHealth);
             _target.TakeDamage(1);
         }
     }

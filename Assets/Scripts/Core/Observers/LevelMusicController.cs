@@ -14,5 +14,10 @@ namespace Core.Observers
         {
             _handler.PlayMusic(_config.LevelMusicClip, true);
         }
+
+        private void OnDisable()
+        {
+            _handler.StopMusic();
+        }
     }
 }

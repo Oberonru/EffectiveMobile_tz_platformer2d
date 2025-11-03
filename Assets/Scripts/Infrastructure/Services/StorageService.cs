@@ -12,11 +12,11 @@ namespace Infrastructure.Services
     [CreateAssetMenu(menuName = "Infrastructure/Services/StorageService", fileName = "StorageService")]
     public class StorageService : ScriptableService, IInitializable
     {
-        public PlayerData PlayerData { get; set; }
+        public GameData GameData { get; set; }
         public IObservable<Unit> OnLoaded => _onLoaded;
         private Subject<Unit> _onLoaded = new();
 
-        private string _fileName = "player.json";
+        private string _fileName = "game.json";
         private string _folderName = "LocalSave";
         private string _filePath;
 
@@ -36,52 +36,52 @@ namespace Infrastructure.Services
             if (!IsReady()) return;
 
 
-            if (PlayerData == null)
+            if (GameData == null)
             {
-                Debug.LogWarning("Save called with null PlayerData.");
+                Debug.LogWarning("Save called with null GameData.");
                 return;
             }
 
             try
             {
-                var json = JsonConvert.SerializeObject(PlayerData, Formatting.Indented);
+                var json = JsonConvert.SerializeObject(GameData, Formatting.Indented);
                 File.WriteAllText(_filePath, json);
             }
             catch (Exception e)
             {
-                Debug.LogError($"Failed to save PlayerData: {e.Message}");
+                Debug.LogError($"Failed to save GameData: {e.Message}");
             }
         }
 
-        public async UniTask<PlayerData> Load()
+        public async UniTask<GameData> Load()
         {
             if (!IsReady())
             {
                 Debug.LogWarning("StorageService not initialized yet. Returning new PlayerData.");
-                PlayerData = new PlayerData();
-                return PlayerData;
+                GameData = new GameData();
+                return GameData;
             }
 
             if (!File.Exists(_filePath))
             {
-                PlayerData = new PlayerData();
-                return PlayerData;
+                GameData = new GameData();
+                return GameData;
             }
 
             try
             {
                 var json = await File.ReadAllTextAsync(_filePath);
-                PlayerData = JsonConvert.DeserializeObject<PlayerData>(json);
+                GameData = JsonConvert.DeserializeObject<GameData>(json);
 
-                return PlayerData;
+                return GameData;
             }
             catch (Exception e)
             {
-                Debug.LogError($"Failed to load PlayerData: {e.Message}");
-                PlayerData = new PlayerData();
+                Debug.LogError($"Failed to load GameData: {e.Message}");
+                GameData = new GameData();
                 _onLoaded?.OnNext(Unit.Default);
 
-                return PlayerData;
+                return GameData;
             }
         }
 

@@ -58,7 +58,7 @@ namespace Core.Player.Components
                 _isJumping = true;
             }
 
-            if (_attackAction.triggered)
+            if (_attackAction.triggered && IsGrounded())
             {
                 Attack();
             }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Core.Handlers
 {
@@ -6,6 +7,8 @@ namespace Core.Handlers
     {
         [SerializeField] private AudioSource _musicSource;
         [SerializeField] private AudioSource _sfxSource;
+        
+        private Queue<AudioClip> _audioQueue = new();
         
         public void PlaySfx(AudioClip clip)
         {
@@ -30,10 +33,11 @@ namespace Core.Handlers
             _musicSource.loop = isLooping;
             _musicSource.Play();
         }
-
+        
         public void StopMusic()
         {
             _musicSource.Stop();
         }
+        
     }
 }

@@ -8,6 +8,11 @@ namespace Core.Handlers
     {
        [SerializeField] private PlayerInstance  _player;
 
+       private void OnValidate()
+       {
+           if (_player == null) _player = FindObjectOfType<PlayerInstance>();
+       }
+
        private void OnEnable()
        {
            _player.ItemDetector.OnPickUp.

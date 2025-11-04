@@ -13,8 +13,9 @@ namespace Core.Enemies.Components
     {
         [Inject] private StorageService _storage;
         [Inject] private EnemyConfig _config;
+        public EnemyData EnemyData => _enemyData;
         [SerializeField] private EnemyInstance _enemy;
-
+        
         private GameData _gameData;
         private EnemyData _enemyData;
 
@@ -53,9 +54,7 @@ namespace Core.Enemies.Components
 
             health.InitMaxHealth(_enemyData.MaxHealth);
             health.CurrentHealth = _enemyData.CurrentHealth;
-            print("_enemyData.CurrentHealth " + _enemyData.CurrentHealth);
             print("enemy current " + _enemy.Health.CurrentHealth);
-            print("enemy max " + _enemy.Health.MaxHealth);
         }
     }
 }

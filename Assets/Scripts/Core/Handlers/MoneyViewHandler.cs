@@ -10,14 +10,15 @@ namespace Core.Handlers
         [SerializeField] private PlayerInstance _player;
         [SerializeField] private MoneyView _view;
 
+        private void OnValidate()
+        {
+            if (_player == null) _player = FindObjectOfType<PlayerInstance>();
+        }
+
         private void OnEnable()
         {
-            _player.DataHandler.MoneyChanged.DistinctUntilChanged().
-                Subscribe(money =>
-                {
-                    _view.SetMoney(money);
-                }).
-                AddTo(this);
+            _player.DataHandler.MoneyChanged.DistinctUntilChanged().Subscribe(money => { _view.SetMoney(money); })
+                .AddTo(this);
         }
     }
 }

@@ -11,6 +11,11 @@ namespace Core.UI
 
         private List<HealthView> _views = new();
 
+        private void OnValidate()
+        {
+            if (_player == null) _player = GetComponent<PlayerInstance>();
+        }
+        
         public void Start()
         {
             for (var i = 0; i < _player.Health.MaxHealth; i++)

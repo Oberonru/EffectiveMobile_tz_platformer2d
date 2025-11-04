@@ -9,6 +9,11 @@ namespace Core.UI
         [SerializeField] private PlayerInstance _player;
         [SerializeField] private HealthGroupView _healthGroup;
 
+        private void OnValidate()
+        {
+            if (_player == null) _player = FindObjectOfType<PlayerInstance>();
+        }
+        
         private void OnEnable()
         {
             _player.Health.OnHealthChanged.Subscribe(health => _healthGroup.

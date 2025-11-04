@@ -13,8 +13,8 @@ namespace Core.Player.Components
         [Inject] private StorageService _storage;
         [SerializeField] private PlayerInstance _player;
 
-        public IReadOnlyReactiveProperty<int> OnMoneyChanged => _onMoney;
-        private ReactiveProperty<int> _onMoney = new();
+        public IReadOnlyReactiveProperty<int> MoneyChanged => _money;
+        private ReactiveProperty<int> _money = new();
 
         private async UniTask Awake()
         {
@@ -25,12 +25,12 @@ namespace Core.Player.Components
 
                 await UniTask.WaitUntil(() => _storage.GameData != null);
 
-                _onMoney.Value = data.PlayerData.PlayerMoney;
+                _money.Value = data.PlayerData.PlayerMoney;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                _onMoney.Value = 0;
+                _money.Value = 0;
             }
         }
 
@@ -43,7 +43,7 @@ namespace Core.Player.Components
         {
             _storage.GameData.PlayerData.PlayerMoney += money;
 
-            _onMoney.Value = _storage.GameData.PlayerData.PlayerMoney;
+            _money.Value = _storage.GameData.PlayerData.PlayerMoney;
         }
 
         private void InitHealth()

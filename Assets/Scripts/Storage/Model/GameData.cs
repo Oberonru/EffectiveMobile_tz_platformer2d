@@ -7,6 +7,6 @@ namespace Storage.Model
     public class GameData
     {
         public PlayerData PlayerData = new PlayerData();
-        public List<EnemyData> _enemyData = new();
+        public List<EnemyData> Enemies = new();
     }
 }

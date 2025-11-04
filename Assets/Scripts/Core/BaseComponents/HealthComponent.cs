@@ -6,8 +6,6 @@ namespace Core.BaseComponents
 {
     public class HealthComponent : MonoBehaviour
     {
-        [SerializeField] private int _maxHealth = 5;
-
         public IObservable<Unit> OnHit => _onHit;
         private readonly Subject<Unit> _onHit = new();
 
@@ -17,6 +15,7 @@ namespace Core.BaseComponents
         public IObservable<Unit> OnDead => _onDead;
         private readonly Subject<Unit> _onDead = new();
 
+        private int _maxHealth;
         private int _currentHealth;
 
         public void InitMaxHealth(int maxHealth)
@@ -25,7 +24,7 @@ namespace Core.BaseComponents
         }
 
         public int MaxHealth => _maxHealth;
-        
+
         public int CurrentHealth
         {
             get => _currentHealth;
@@ -48,7 +47,7 @@ namespace Core.BaseComponents
             if (amount <= 0) return;
 
             print("heal amount: " + amount);
-            
+
             _currentHealth = Mathf.Clamp(amount + _currentHealth, 0, _maxHealth);
             _onHealthChanged.OnNext(_currentHealth);
         }

@@ -12,7 +12,7 @@ namespace Core.Handlers
 
         private void OnEnable()
         {
-            _player.DataHandler.OnMoneyChanged.DistinctUntilChanged().
+            _player.DataHandler.MoneyChanged.DistinctUntilChanged().
                 Subscribe(money =>
                 {
                     _view.SetMoney(money);

@@ -1,4 +1,9 @@
-﻿using Infrastructure.Services;
+﻿using System;
+using System.Linq;
+using Core.Enemies;
+using Cysharp.Threading.Tasks;
+using Infrastructure.Services;
+using Storage.Model;
 using UnityEngine;
 using Zenject;
 
@@ -7,10 +12,52 @@ namespace Core.Configs.Enemy.Components
     public class EnemyDataHandler : MonoBehaviour
     {
         [Inject] private StorageService _storage;
+        [Inject] private EnemyConfig _config;
+        [SerializeField] private EnemyInstance _enemy;
 
-        private void Awake()
+        private GameData _gameData;
+        private EnemyData _enemyData;
+
+        private async void Awake()
         {
-            var data = _storage.Load();
+            try
+            {
+                _gameData = await _storage.Load();
+                await UniTask.WaitUntil(() => _gameData != null);
+
+                _enemyData = _gameData.Enemies.FirstOrDefault(e => e.Id == _enemy.Guid);
+
+                if (_enemyData == null)
+                {
+                    _enemyData = new EnemyData(
+                        _enemy.Guid,
+                        "_config.EnemyName",
+                        1,
+                        _config.BaseDamage,
+                        _config.BaseMaxHealth,
+                        _config.BaseMaxHealth
+                    );
+
+                    _gameData.Enemies.Add(_enemyData);
+                }
+
+                InitHealthFromData();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+        }
+
+        private void InitHealthFromData()
+        {
+            var health = _enemy.Health;
+
+            health.InitMaxHealth(_enemyData.MaxHealth);
+            health.CurrentHealth = _enemyData.CurrentHealth;
+            print("_enemyData.CurrentHealth " + _enemyData.CurrentHealth);
+            print("enemy current " + _enemy.Health.CurrentHealth);
+            print("enemy max " + _enemy.Health.MaxHealth);
         }
     }
 }

@@ -34,10 +34,6 @@ namespace Core.Player.Components
 
         private void AttackHandle()
         {
-            //TODO: add player damage field
-            
-            print(_target);
-            print(_target.CurrentHealth);
             _target.TakeDamage(1);
         }
     }

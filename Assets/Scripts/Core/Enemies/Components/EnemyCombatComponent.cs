@@ -1,5 +1,6 @@
 ﻿using Core.CombatSystem;
 using Core.Configs.Player;
+using Core.Handlers;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -10,6 +11,7 @@ namespace Core.Enemies.Components
     public class EnemyCombatComponent : MonoBehaviour
     {
         [Inject] private PlayerConfig _config;
+        [Inject] private IAudioHandler _audioHandler;
         [SerializeField] private HitBoxDetector _detector;
         [SerializeField] private EnemyInstance _enemy;
 
@@ -39,6 +41,7 @@ namespace Core.Enemies.Components
             {
                 _time = Time.time;
                 playerHitBox.Health.TakeDamage(_enemy.DataHandler.EnemyData.Damage);
+                _audioHandler.PlaySfx(playerHitBox.Clips);
             }
         }
     }

@@ -17,7 +17,7 @@ namespace Core.Handlers
         
         public void PlaySfx(AudioClip[] clip)
         {
-            if (clip.Length == 0)
+            if (clip == null || clip.Length == 0)
             {
                 Debug.LogWarning("No clip given to PlaySfx");
                 return;

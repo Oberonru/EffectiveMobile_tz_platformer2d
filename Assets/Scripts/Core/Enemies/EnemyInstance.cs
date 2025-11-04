@@ -15,12 +15,9 @@ namespace Core.Enemies
         [Inject] private EnemyConfig _enemyConfig;
         [SerializeField] private HealthComponent _health;
         [SerializeField] private EnemyDataHandler _dataHandler;
-        private string _guid = System.Guid.NewGuid().ToString();
-
         public EnemyConfig Stats => _enemyConfig;
         public HealthComponent Health => _health;
         public EnemyDataHandler DataHandler => _dataHandler;
-        public string Guid => _guid;
 
         private void OnValidate()
         {

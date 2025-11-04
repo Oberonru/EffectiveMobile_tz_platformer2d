@@ -25,13 +25,11 @@ namespace Core.Configs.Enemy.Components
                 _gameData = await _storage.Load();
                 await UniTask.WaitUntil(() => _gameData != null);
 
-                _enemyData = _gameData.Enemies.FirstOrDefault(e => e.Id == _enemy.Guid);
+                _enemyData = _gameData.Enemies.FirstOrDefault(e => e.CurrentHealth > 0);
 
                 if (_enemyData == null)
                 {
                     _enemyData = new EnemyData(
-                        _enemy.Guid,
-                        "_config.EnemyName",
                         1,
                         _config.BaseDamage,
                         _config.BaseMaxHealth,

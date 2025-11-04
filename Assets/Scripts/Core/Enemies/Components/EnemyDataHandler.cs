@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
-using Core.Enemies;
+using Core.Configs.Enemy;
 using Cysharp.Threading.Tasks;
 using Infrastructure.Services;
 using Storage.Model;
 using UnityEngine;
 using Zenject;
 
-namespace Core.Configs.Enemy.Components
+namespace Core.Enemies.Components
 {
     public class EnemyDataHandler : MonoBehaviour
     {

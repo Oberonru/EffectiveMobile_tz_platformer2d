@@ -54,7 +54,6 @@ namespace Core.Enemies.Components
 
             health.InitMaxHealth(_enemyData.MaxHealth);
             health.CurrentHealth = _enemyData.CurrentHealth;
-            print("enemy current " + _enemy.Health.CurrentHealth);
         }
     }
 }

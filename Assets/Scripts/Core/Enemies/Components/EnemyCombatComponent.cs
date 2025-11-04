@@ -19,7 +19,7 @@ namespace Core.Enemies.Components
 
         private void OnValidate()
         {
-            if (_detector == null) _detector = GetComponent<HitBoxDetector>();
+            if (_detector == null) _detector = GetComponentInChildren<HitBoxDetector>();
             if (_enemy == null) _enemy = GetComponent<EnemyInstance>();
         }
 

@@ -16,34 +16,29 @@ namespace Core.Player.Components
 
         private void OnEnable()
         {
-            _player.PlayerController.OnJump.
-                Subscribe(_ => _animator.SetTrigger(JumpHash)).
-                AddTo(this);
+            _player.PlayerController.OnJump.Subscribe(_ => _animator.SetTrigger(JumpHash)).AddTo(this);
 
-            _player.PlayerController.OnAttack.
-                Subscribe(_ => _animator.SetTrigger(AttackHash)).
-                AddTo(this);
+            _player.PlayerController.OnAttack.Subscribe(_ => _animator.SetTrigger(AttackHash)).AddTo(this);
 
-            _player.Health.OnDead.
-                Subscribe(_ =>
-                {
-                    print("Death");
-                    _animator.SetBool(DeathHash, true);
-                }).
-                AddTo(this);
+            _player.Health.OnDead.Subscribe(_ => { _animator.SetBool(DeathHash, true); }).AddTo(this);
         }
 
         private void OnValidate()
         {
             if (_animator == null) _animator = GetComponent<Animator>();
             if (_player == null) _player = GetComponent<PlayerInstance>();
-            
         }
 
         private void Update()
         {
-            if (_player.PlayerController.IsGrounded())
+            if (CanRunAnimated())
                 _animator.SetFloat(SpeedHash, Mathf.Abs(_player.PlayerController.VelocityX));
+        }
+
+        private bool CanRunAnimated()
+        {
+            return _player.PlayerController.IsGrounded() && _player.PlayerController.MoveInput != Vector2.zero &&
+                   Mathf.Abs(_player.PlayerController.VelocityY) < -0.01f;
         }
     }
 }

@@ -34,9 +34,15 @@ namespace Core.Player.Components
         private bool _isJumping;
         private bool _isPrevRunning;
 
+        public Vector2 MoveInput => _moveInput;
         public float VelocityX
         {
             get => _rigidbody.velocity.x;
+        }
+
+        public float VelocityY
+        {
+            get => _rigidbody.velocity.y;
         }
 
         private void Awake()
@@ -122,7 +128,6 @@ namespace Core.Player.Components
 
         private void Attack()
         {
-            print("Attack");
             _handler.PlaySfx(_clipsConfig.Attack);
             _onAttack?.OnNext(Unit.Default);
         }

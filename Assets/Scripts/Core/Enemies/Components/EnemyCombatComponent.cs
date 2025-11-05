@@ -31,20 +31,22 @@ namespace Core.Enemies.Components
             {
                 if (hitbox is PlayerHitBox playerHitBox)
                 {
-                    HandleHit(playerHitBox);
+                    AttackPlayer(playerHitBox);
                 }
             }).AddTo(this);
         }
 
-        private void HandleHit(PlayerHitBox playerHitBox)
+        private void AttackPlayer(PlayerHitBox playerHitBox)
         {
             if (Time.time >= _time + _config.Invulnerability)
             {
                 _time = Time.time;
+                
                 playerHitBox.Health.TakeDamage
                 (new DamageContext
                 (_enemy.DataHandler.EnemyData.Damage,
                     new Vector2(_enemy.Transform.position.x, _enemy.Transform.position.y), _enemyConfig.ThrowingForce));
+                
                 _audioHandler.PlaySfx(playerHitBox.Clips);
             }
         }

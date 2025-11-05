@@ -1,6 +1,8 @@
-﻿using Core.BaseComponents;
+﻿using System;
+using Core.BaseComponents;
 using Core.CombatSystem;
 using Core.Handlers;
+using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -64,11 +66,20 @@ namespace Core.Player.Components
             var direction = (_player.transform.position - (Vector3)ctx.AttackerPosition).normalized;
             direction = new Vector3(direction.x, 0, direction.z);
             
+            _player.PlayerController.Disable();
+            
             _player.PlayerController.Rigidbody.velocity = Vector2.zero; 
             _player.PlayerController.Rigidbody.AddForce(direction * ctx.ThrowingForce, ForceMode2D.Impulse);
+            
+            EnableController().Forget();
         }
 
-
+        private async UniTask EnableController()
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(0.1f), cancellationToken: this.GetCancellationTokenOnDestroy());
+            _player.PlayerController.Enable();
+        }
+        
         private void AttackHandle()
         {
             if (_currentHitBox == null || _target == null) return;

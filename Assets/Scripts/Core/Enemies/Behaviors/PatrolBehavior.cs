@@ -95,7 +95,7 @@ namespace Core.Enemies.Behaviors
 
         private void CheckForwardWall()
         {
-            if (_forwardCheck == null) return;
+            if (_forwardCheck == null || !_forwardCheck.gameObject.activeInHierarchy) return;
 
             _hitsBuffer.Clear();
             Vector2 dir = Vector2.right * _direction;
@@ -128,7 +128,7 @@ namespace Core.Enemies.Behaviors
 
         private void CheckGroundAhead()
         {
-            if (_groundCheck == null) return;
+            if (_groundCheck == null || !_forwardCheck.gameObject.activeInHierarchy) return;
 
             RaycastHit2D hit = Physics2D.Raycast(
                 _groundCheck.position,

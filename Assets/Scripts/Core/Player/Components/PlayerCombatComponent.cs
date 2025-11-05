@@ -78,7 +78,7 @@ namespace Core.Player.Components
         {
             if (!_player.Health.IsAlive()) return;
             
-            await UniTask.Delay(TimeSpan.FromSeconds(0.05f), cancellationToken: this.GetCancellationTokenOnDestroy());
+            await UniTask.Delay(TimeSpan.FromSeconds(0.1f), cancellationToken: this.GetCancellationTokenOnDestroy());
             _player.PlayerController.Enable();
         }
         

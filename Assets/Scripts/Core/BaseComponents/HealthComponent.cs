@@ -19,10 +19,6 @@ namespace Core.BaseComponents
         private int _maxHealth;
         private int _currentHealth;
 
-        public void InitMaxHealth(int maxHealth)
-        {
-            _maxHealth = maxHealth;
-        }
 
         public int MaxHealth => _maxHealth;
 
@@ -31,6 +27,13 @@ namespace Core.BaseComponents
             get => _currentHealth;
             set => _currentHealth = value;
         }
+
+        public void InitMaxHealth(int maxHealth)
+        {
+            _maxHealth = maxHealth;
+        }
+        
+        public bool IsAlive() => _currentHealth > 0;
 
         public void TakeDamage(DamageContext ctx)
         {

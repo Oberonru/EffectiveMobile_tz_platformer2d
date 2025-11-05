@@ -1,15 +1,19 @@
 ﻿using System.Collections.Generic;
-using Core.Enemies.Configs;
 using Core.Player;
 using UnityEngine;
-using Zenject;
 
 namespace Core.Enemies.Behaviors
 {
     [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class PatrolBehavior : MonoBehaviour
     {
-        [Inject] private PatrolBehaviourConfig _config;
+        [SerializeField] private float _speed = 2f;
+        [SerializeField] private float _movementDistance = 3f;
+
+        [SerializeField] private float _forwardRayDistance = 0.5f;
+        [SerializeField] private float _downRayDistance = 1f;
+
+        [SerializeField] private float _turnCooldown = 0.2f;
 
         [SerializeField] private Transform _forwardCheck;
         [SerializeField] private Transform _groundCheck;
@@ -65,25 +69,25 @@ namespace Core.Enemies.Behaviors
 
         private void NavigateKinematic()
         {
-            transform.Translate(Vector2.right * (_direction * _config.Speed * Time.deltaTime));
+            transform.Translate(Vector2.right * (_direction * _speed * Time.deltaTime));
 
             var offset = transform.position.x - _startPosition.x;
-            if (Mathf.Abs(offset) >= _config.MovementDistance)
+            if (Mathf.Abs(offset) >= _movementDistance)
             {
                 ReverseDirection();
                 var clampedX = Mathf.Clamp(transform.position.x,
-                    _startPosition.x - _config.MovementDistance,
-                    _startPosition.x + _config.MovementDistance);
+                    _startPosition.x - _movementDistance,
+                    _startPosition.x + _movementDistance);
                 transform.position = new Vector2(clampedX, transform.position.y);
             }
         }
 
         private void NavigatePhysics()
         {
-            _rb.velocity = new Vector2(_direction * _config.Speed, _rb.velocity.y);
+            _rb.velocity = new Vector2(_direction * _speed, _rb.velocity.y);
 
             var offset = transform.position.x - _startPosition.x;
-            if (Mathf.Abs(offset) >= _config.MovementDistance)
+            if (Mathf.Abs(offset) >= _movementDistance)
             {
                 ReverseDirection();
             }
@@ -95,7 +99,7 @@ namespace Core.Enemies.Behaviors
 
             _hitsBuffer.Clear();
             Vector2 dir = Vector2.right * _direction;
-            var distance = _config.ForwardRayDistance;
+            var distance = _forwardRayDistance;
 
             var filter = new ContactFilter2D
             {
@@ -129,7 +133,7 @@ namespace Core.Enemies.Behaviors
             RaycastHit2D hit = Physics2D.Raycast(
                 _groundCheck.position,
                 Vector2.down,
-                _config.DownRayDistance,
+                _downRayDistance,
                 Physics2D.DefaultRaycastLayers
             );
 
@@ -143,7 +147,7 @@ namespace Core.Enemies.Behaviors
 
         private void ReverseDirection()
         {
-            if (Time.time < _lastTurnTime + _config.TurnCooldown) return;
+            if (Time.time < _lastTurnTime + _turnCooldown) return;
 
             _direction *= -1;
 
@@ -165,20 +169,18 @@ namespace Core.Enemies.Behaviors
 
         private void OnDrawGizmos()
         {
-            if (_config == null) return;
-
             Gizmos.color = Color.red;
             if (_forwardCheck != null)
             {
                 Gizmos.DrawLine(_forwardCheck.position,
-                    _forwardCheck.position + Vector3.right * _direction * _config.ForwardRayDistance);
+                    _forwardCheck.position + Vector3.right * _direction * _forwardRayDistance);
             }
 
             Gizmos.color = Color.green;
             if (_groundCheck != null)
             {
                 Gizmos.DrawLine(_groundCheck.position,
-                    _groundCheck.position + Vector3.down * _config.DownRayDistance);
+                    _groundCheck.position + Vector3.down * _downRayDistance);
             }
         }
     }

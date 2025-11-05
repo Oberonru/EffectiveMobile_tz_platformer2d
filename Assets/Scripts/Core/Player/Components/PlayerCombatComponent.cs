@@ -36,7 +36,7 @@ namespace Core.Player.Components
                 _target = null;
             }).AddTo(this);
 
-            _player.PlayerController.OnAttack.Where(_ => _target != null).Subscribe(_ => AttackHandle()).AddTo(this);
+            _player.PlayerController.AttackStream.Where(_ => _target != null).Subscribe(_ => AttackHandle()).AddTo(this);
         }
 
         private void AttackHandle()

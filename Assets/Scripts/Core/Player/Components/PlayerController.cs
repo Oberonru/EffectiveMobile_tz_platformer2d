@@ -19,62 +19,36 @@ namespace Core.Player.Components
         [Inject] private PlayerConfig _config;
         [SerializeField] private Transform _groundCheck;
 
-        public IObservable<Unit> OnJump => _onJump;
-        private Subject<Unit> _onJump = new();
-        public IObservable<Unit> OnAttack => _onAttack;
-        private Subject<Unit> _onAttack = new();
+        public IObservable<Unit> JumpStream => _jumpStream;
+        private readonly Subject<Unit> _jumpStream = new();
 
-        private PlayerInput _playerInput;
-        private InputAction _moveAction;
-        private InputAction _jumpAction;
-        private InputAction _attackAction;
+        public IObservable<Unit> AttackStream => _attackStream;
+        private readonly Subject<Unit> _attackStream = new();
 
         private Rigidbody2D _rigidbody;
         private Vector2 _moveInput;
         private bool _isJumping;
-        private bool _isPrevRunning;
 
         public Vector2 MoveInput => _moveInput;
-        public float VelocityX
-        {
-            get => _rigidbody.velocity.x;
-        }
-
-        public float VelocityY
-        {
-            get => _rigidbody.velocity.y;
-        }
+        public float VelocityX => _rigidbody.velocity.x;
+        public float VelocityY => _rigidbody.velocity.y;
 
         private void Awake()
         {
-            if (_playerInput == null) _playerInput = GetComponent<PlayerInput>();
             if (_rigidbody == null) _rigidbody = GetComponent<Rigidbody2D>();
-
-            _moveAction = _playerInput.actions["Move"];
-            _jumpAction = _playerInput.actions["Jump"];
-            _attackAction = _playerInput.actions["Attack"];
         }
 
-        private void Update()
+        private bool IsGrounded()
         {
-            _moveInput = _moveAction.ReadValue<Vector2>();
+            var hit = Physics2D.Raycast(
+                _groundCheck.position,
+                Vector2.down,
+                _config.GroundCheckDistance,
+                ~0
+            );
 
-            if (_jumpAction.triggered && IsGrounded())
-            {
-                _isJumping = true;
-            }
-
-            if (_attackAction.triggered && IsGrounded())
-            {
-                Attack();
-            }
-        }
-
-        public bool IsGrounded()
-        {
-            var hit = Physics2D.Raycast(_groundCheck.position, Vector2.down, _config.GroundCheckDistance, ~0);
-
-            return hit.collider != null && !hit.collider.isTrigger &&
+            return hit.collider != null &&
+                   !hit.collider.isTrigger &&
                    hit.normal.y >= _config.GroundNormalThreshold;
         }
 
@@ -93,6 +67,46 @@ namespace Core.Player.Components
             }
         }
 
+        private void RotateToInput()
+        {
+            if (_moveInput.x > 0.01f)
+            {
+                transform.localScale = new Vector3(
+                    Mathf.Abs(transform.localScale.x),
+                    transform.localScale.y,
+                    transform.localScale.z
+                );
+            }
+            else if (_moveInput.x < -0.01f)
+            {
+                transform.localScale = new Vector3(
+                    -Mathf.Abs(transform.localScale.x),
+                    transform.localScale.y,
+                    transform.localScale.z
+                );
+            }
+        }
+
+        public void OnMove(InputValue value)
+        {
+            _moveInput = value.Get<Vector2>();
+        }
+
+        public void OnJump(InputValue value)
+        {
+            if (IsGrounded())
+                _isJumping = true;
+        }
+
+        public void OnAttack(InputValue value)
+        {
+            if (IsGrounded())
+                Attack();
+        }
+
+        public void Enable() => enabled = true;
+        public void Disable() => enabled = false;
+
         private void Move()
         {
             RotateToInput();
@@ -107,39 +121,15 @@ namespace Core.Player.Components
             var velocity = _rigidbody.velocity;
             velocity.y = _config.JumpForce;
             _rigidbody.velocity = velocity;
-            
-            _handler.PlaySfx(_clipsConfig.Jumps);
-            _onJump?.OnNext(Unit.Default);
-        }
 
-        private void RotateToInput()
-        {
-            if (_moveInput.x > 0.01f)
-            {
-                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y,
-                    transform.localScale.z);
-            }
-            else if (_moveInput.x < -0.01f)
-            {
-                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y,
-                    transform.localScale.z);
-            }
+            _handler.PlaySfx(_clipsConfig.Jumps);
+            _jumpStream?.OnNext(Unit.Default);
         }
 
         private void Attack()
         {
             _handler.PlaySfx(_clipsConfig.Attack);
-            _onAttack?.OnNext(Unit.Default);
-        }
-
-        public void Enable()
-        {
-            enabled = true;
-        }
-
-        public void Disable()
-        {
-            enabled = false;
+            _attackStream?.OnNext(Unit.Default);
         }
     }
 }

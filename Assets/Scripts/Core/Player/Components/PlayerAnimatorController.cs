@@ -6,7 +6,7 @@ namespace Core.Player.Components
     [RequireComponent(typeof(Animator))]
     public class PlayerAnimatorController : MonoBehaviour
     {
-        [SerializeField] Animator _animator;
+        [SerializeField] private Animator _animator;
         [SerializeField] private PlayerInstance _player;
 
         private static readonly int JumpHash = Animator.StringToHash("Jump");
@@ -14,13 +14,22 @@ namespace Core.Player.Components
         private static readonly int AttackHash = Animator.StringToHash("Attack");
         private static readonly int DeathHash = Animator.StringToHash("IsDeath");
 
+        // Порог для фильтрации мелких дрожаний скорости
+        private const float SpeedThreshold = 0.05f;
+
         private void OnEnable()
         {
-            _player.PlayerController.OnJump.Subscribe(_ => _animator.SetTrigger(JumpHash)).AddTo(this);
+            _player.PlayerController.JumpStream
+                .Subscribe(_ => _animator.SetTrigger(JumpHash))
+                .AddTo(this);
 
-            _player.PlayerController.OnAttack.Subscribe(_ => _animator.SetTrigger(AttackHash)).AddTo(this);
+            _player.PlayerController.AttackStream
+                .Subscribe(_ => _animator.SetTrigger(AttackHash))
+                .AddTo(this);
 
-            _player.Health.OnDead.Subscribe(_ => { _animator.SetBool(DeathHash, true); }).AddTo(this);
+            _player.Health.OnDead
+                .Subscribe(_ => _animator.SetBool(DeathHash, true))
+                .AddTo(this);
         }
 
         private void OnValidate()
@@ -31,14 +40,12 @@ namespace Core.Player.Components
 
         private void Update()
         {
-            if (CanRunAnimated())
-                _animator.SetFloat(SpeedHash, Mathf.Abs(_player.PlayerController.VelocityX));
-        }
+            var inputX = Mathf.Abs(_player.PlayerController.MoveInput.x);
+            var speed = inputX > 0.01f 
+                ? Mathf.Abs(_player.PlayerController.VelocityX) 
+                : 0f;
 
-        private bool CanRunAnimated()
-        {
-            return _player.PlayerController.IsGrounded() && _player.PlayerController.MoveInput != Vector2.zero &&
-                   Mathf.Abs(_player.PlayerController.VelocityY) < -0.01f;
+            _animator.SetFloat(SpeedHash, speed);
         }
     }
 }

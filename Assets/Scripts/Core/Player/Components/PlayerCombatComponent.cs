@@ -41,7 +41,7 @@ namespace Core.Player.Components
 
         private void AttackHandle()
         {
-            _target.TakeDamage(1);
+            _target.TakeDamage(_player.Stats.BaseDamage);
 
             if (_currentHitBox != null)
             {

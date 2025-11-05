@@ -13,6 +13,8 @@ namespace Core.Configs.Player
         [SerializeField] private int _maxHealth = 5; 
         [SerializeField] private int playerLevel = 1; 
         [SerializeField] private float _invulnerability = 1f;
+        [SerializeField] private int _baseDamage;
+
 
         public float Speed => _speed;
         public float JumpForce => _jumpForce;
@@ -21,5 +23,6 @@ namespace Core.Configs.Player
         public int MaxHealth => _maxHealth;
         public int PlayerLevel => playerLevel;
         public float Invulnerability => _invulnerability;
+        public int BaseDamage => _baseDamage;
     }
 }

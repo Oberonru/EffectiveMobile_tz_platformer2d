@@ -14,6 +14,7 @@ namespace Core.Configs.Player
         [SerializeField] private int playerLevel = 1; 
         [SerializeField] private float _invulnerability = 1f;
         [SerializeField] private int _baseDamage;
+        [SerializeField] private float _playerThrowingForce = 100;
 
 
         public float Speed => _speed;
@@ -24,5 +25,6 @@ namespace Core.Configs.Player
         public int PlayerLevel => playerLevel;
         public float Invulnerability => _invulnerability;
         public int BaseDamage => _baseDamage;
+        public float ThrowingForce => _playerThrowingForce;
     }
 }

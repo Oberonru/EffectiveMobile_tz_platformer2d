@@ -15,6 +15,8 @@ namespace Core.Enemies
         [Inject] private EnemyConfig _enemyConfig;
         [SerializeField] private HealthComponent _health;
         [SerializeField] private EnemyDataHandler _dataHandler;
+        public Transform Transform => transform;
+        
         public EnemyConfig Stats => _enemyConfig;
         public HealthComponent Health => _health;
         public EnemyDataHandler DataHandler => _dataHandler;

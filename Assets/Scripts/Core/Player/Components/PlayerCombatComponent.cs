@@ -15,6 +15,7 @@ namespace Core.Player.Components
 
         private HealthComponent _target;
         private IHitBox _currentHitBox;
+        private SpriteRenderer _spriteRenderer;
 
         private void OnEnable()
         {
@@ -36,17 +37,47 @@ namespace Core.Player.Components
                 _target = null;
             }).AddTo(this);
 
-            _player.PlayerController.AttackStream.Where(_ => _target != null).Subscribe(_ => AttackHandle()).AddTo(this);
+            _player.PlayerController.AttackStream.
+                Where(_ => _target != null).
+                Subscribe(_ => AttackHandle())
+                .AddTo(this);
+
+            _player.Health.OnHit.
+                Subscribe(ctx =>
+                {
+                    HandleIncomingHit(ctx);
+                }).AddTo(this);
         }
+
+        private void Start()
+        {
+            if (_spriteRenderer == null) _spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        private void HandleIncomingHit(DamageContext ctx)
+        {
+            ThrowingPlayer(ctx);
+        }
+
+        private void ThrowingPlayer(DamageContext ctx)
+        {
+            var direction = (_player.transform.position - (Vector3)ctx.AttackerPosition).normalized;
+            direction = new Vector3(direction.x, 0, direction.z);
+            
+            _player.PlayerController.Rigidbody.velocity = Vector2.zero; 
+            _player.PlayerController.Rigidbody.AddForce(direction * ctx.ThrowingForce, ForceMode2D.Impulse);
+        }
+
 
         private void AttackHandle()
         {
-            _target.TakeDamage(_player.Stats.BaseDamage);
+            if (_currentHitBox == null || _target == null) return;
 
-            if (_currentHitBox != null)
-            {
-                _audioHandler.PlaySfx(_currentHitBox.Clips);
-            }
+            var ctx = new DamageContext(_player.Stats.BaseDamage,
+                new Vector2(_player.Transform.position.x, _player.Transform.position.y), _player.Stats.ThrowingForce);
+
+            _target.TakeDamage(ctx);
+            _audioHandler.PlaySfx(_currentHitBox.Clips);
         }
     }
 }

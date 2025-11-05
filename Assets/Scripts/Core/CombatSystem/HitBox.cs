@@ -12,7 +12,7 @@ namespace Core.CombatSystem
         [SerializeField] private Collider2D _collider;
         public AudioClip[] Clips => _tarcks;
         [SerializeField] private AudioClip[] _tarcks;
-
+        
         private void OnValidate()
         {
             if (_collider == null) _collider = GetComponent<Collider2D>();

@@ -1,5 +1,4 @@
 ﻿using System;
-using Core.Enemies;
 using UniRx;
 using UnityEngine;
 
@@ -20,7 +19,6 @@ namespace Core.CombatSystem
         {
             if (other.TryGetComponent(out IHitBox box))
             {
-                print("on trigger enter" + other.name);
                 _onEnter.OnNext(box);
             }
         }
@@ -37,8 +35,6 @@ namespace Core.CombatSystem
         {
             if (other.TryGetComponent(out IHitBox box))
             {
-                print("on trigger exit" + other.name);
-
                 _onExit.OnNext(box);
             }
         }

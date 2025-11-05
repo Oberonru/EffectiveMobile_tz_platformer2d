@@ -26,6 +26,7 @@ namespace Core.Player
         [SerializeField] private ItemDetector _itemDetector;
         [SerializeField] private PlayerDataHandler _playerDataHandler;
         [SerializeField] private PlayerCombatComponent _playerCombatComponent;
+        public Transform Transform => transform;
         
         public PlayerConfig Stats => _config;
         public PlayerController PlayerController => _playerController;

@@ -12,7 +12,7 @@ namespace DevTools
             if (Input.GetKeyDown(KeyCode.V))
             {
                 print("TakeDamage");
-                _player.Health.TakeDamage(1);
+                //_player.Health.TakeDamage(1);
             }
         }
     }

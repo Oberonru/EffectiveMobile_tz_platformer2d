@@ -17,6 +17,7 @@ namespace Core.Player.Components
         [Inject] private IAudioHandler _handler;
         [Inject] private AudioClipsConfig _clipsConfig;
         [Inject] private PlayerConfig _config;
+        public Rigidbody2D Rigidbody => _rigidbody;
         [SerializeField] private Transform _groundCheck;
 
         public IObservable<Unit> JumpStream => _jumpStream;

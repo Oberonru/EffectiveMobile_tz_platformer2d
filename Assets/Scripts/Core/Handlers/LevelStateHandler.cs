@@ -32,6 +32,7 @@ namespace Core.Handlers
             var screen = _screenHandler.GetScreen<WinScreen>(ScreenType.WinScreen);
             
             screen.ShowLevelResult();
+            player.StateHandler.DisableAllComponents();
         }
     }
 }

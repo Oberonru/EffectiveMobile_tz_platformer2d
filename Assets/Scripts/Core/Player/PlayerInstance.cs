@@ -9,9 +9,9 @@ using Zenject;
 namespace Core.Player
 {
     [RequireComponent(typeof(CorpseHandler))]
-    [RequireComponent(typeof(StateComponentHandler))]
     [RequireComponent(typeof(ItemDetector))]
     [RequireComponent(typeof(PlayerController))]
+    [RequireComponent(typeof(StateComponentHandler))]
     [RequireComponent(typeof(PlayerAnimatorController))]
     [RequireComponent(typeof(HealthComponent))]
     [RequireComponent(typeof(ItemDetector))]
@@ -21,6 +21,7 @@ namespace Core.Player
     {
         [Inject] private PlayerConfig _config;
         [SerializeField] private PlayerController _playerController;
+        [SerializeField] private StateComponentHandler _stateComponentHandler;
         [SerializeField] private PlayerAnimatorController _animatorController;
         [SerializeField] private HealthComponent _healthComponent;
         [SerializeField] private ItemDetector _itemDetector;
@@ -30,6 +31,7 @@ namespace Core.Player
         
         public PlayerConfig Stats => _config;
         public PlayerController PlayerController => _playerController;
+        public StateComponentHandler StateHandler => _stateComponentHandler;
         public PlayerAnimatorController AnimatorController => _animatorController;
         public HealthComponent Health => _healthComponent;
         public ItemDetector ItemDetector => _itemDetector;

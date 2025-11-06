@@ -106,7 +106,16 @@ namespace Core.Player.Components
         }
 
         public void Enable() => enabled = true;
-        public void Disable() => enabled = false;
+        public void Disable()
+        {
+            enabled = false;
+            
+            var input = GetComponent<PlayerInput>();
+            if (input != null)
+            {
+                input.enabled = false;
+            }
+        }
 
         private void Move()
         {

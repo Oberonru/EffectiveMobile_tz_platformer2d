@@ -2,6 +2,9 @@
 {
     public enum ScreenType
     {
-        
+        MainMenu,
+        Settings,
+        WinScreen,
+        LoseScreen
     }
 }

@@ -8,7 +8,7 @@ namespace Core.Gameplay
     public class WinZone : MonoBehaviour
     {
         public IObservable<PlayerInstance> OnWin => _onWin;
-        private Subject<PlayerInstance> _onWin => new();
+        private Subject<PlayerInstance> _onWin = new();
         
         private void OnTriggerEnter2D(Collider2D other)
         {

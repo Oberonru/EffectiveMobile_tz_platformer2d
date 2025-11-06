@@ -36,7 +36,8 @@ namespace Core.UI.Screens
             
             _menu?.onClick.
                 AsObservable().
-                Subscribe(_ => print("Btn click")).AddTo(this);
+                Subscribe(_ => _loader.LoadScene(SceneName.MainMenu.ToString())).
+                AddTo(this);
         }
 
         public void ShowLevelResult()

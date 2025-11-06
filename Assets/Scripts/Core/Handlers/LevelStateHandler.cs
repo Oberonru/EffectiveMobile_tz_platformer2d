@@ -1,4 +1,6 @@
-﻿using Core.Gameplay;
+﻿using System.Runtime.InteropServices;
+using Core.Configs.Audio;
+using Core.Gameplay;
 using Core.Model;
 using Core.Player;
 using Core.UI.Screens;
@@ -11,6 +13,8 @@ namespace Core.Handlers
     [RequireComponent(typeof(WindZone))]
     public class LevelStateHandler : MonoBehaviour
     {
+        [Inject] private IAudioHandler _audioHandler;
+        [Inject] private AudioClipsConfig _audioClipsConfig;
         [Inject] private IScreenHandler _handler;
         [SerializeField] private WinZone _winZone;
         [SerializeField] private LoseZone _loseZone;
@@ -43,6 +47,9 @@ namespace Core.Handlers
         private void Lose(PlayerInstance player)
         {
             _handler.SetScreen(ScreenType.LoseScreen);
+            player.StateHandler.DisableAllComponents();
+            _audioHandler.StopMusic();
+            _audioHandler.PlaySfx(_audioClipsConfig.GameOver);
         }
     }
 }

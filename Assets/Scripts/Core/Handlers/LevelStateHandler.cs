@@ -29,6 +29,9 @@ namespace Core.Handlers
         private void Win(PlayerInstance player)
         {
             _screenHandler.SetScreen(ScreenType.WinScreen);
+            var screen = _screenHandler.GetScreen<WinScreen>(ScreenType.WinScreen);
+            
+            screen.ShowLevelResult();
         }
     }
 }

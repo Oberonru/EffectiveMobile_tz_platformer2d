@@ -31,7 +31,13 @@ namespace Core.Player.Components
         private bool _isJumping;
 
         public Vector2 MoveInput => _moveInput;
-        public float VelocityX => _rigidbody.velocity.x;
+
+        public float VelocityX
+        {
+            get => _rigidbody.velocity.x;
+            set => _rigidbody.velocity = new Vector2(value, _rigidbody.velocity.y);
+        }
+
         public float VelocityY => _rigidbody.velocity.y;
 
         private void Awake()
@@ -106,10 +112,11 @@ namespace Core.Player.Components
         }
 
         public void Enable() => enabled = true;
+
         public void Disable()
         {
             enabled = false;
-            
+
             var input = GetComponent<PlayerInput>();
             if (input != null)
             {

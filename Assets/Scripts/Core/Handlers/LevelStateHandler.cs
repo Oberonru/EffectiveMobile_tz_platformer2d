@@ -42,6 +42,9 @@ namespace Core.Handlers
             
             screen.ShowLevelResult();
             player.StateHandler.DisableAllComponents();
+            player.PlayerController.VelocityX = 0;
+            _audioHandler.StopMusic();
+            _audioHandler.PlaySfx(_audioClipsConfig.WinSound);
         }
 
         private void Lose(PlayerInstance player)

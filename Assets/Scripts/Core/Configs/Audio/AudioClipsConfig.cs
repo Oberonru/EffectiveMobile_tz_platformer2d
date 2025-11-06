@@ -14,6 +14,7 @@ namespace Core.Configs.Audio
         [SerializeField] private AudioClip[] _jumps;
         [SerializeField] private AudioClip _attack;
         [SerializeField] private AudioClip _gameOver;
+        [SerializeField] private AudioClip _winSound;
 
         public AudioClip MainMenuClip => _mainMenuClip;
         public AudioClip LevelMusicClip => _levelMusicClip;
@@ -23,5 +24,6 @@ namespace Core.Configs.Audio
         public AudioClip[] Jumps => _jumps;
         public AudioClip Attack => _attack;
         public AudioClip GameOver => _gameOver;
+        public AudioClip WinSound => _winSound;
     }
 }

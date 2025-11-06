@@ -11,8 +11,9 @@ namespace Core.Handlers
     [RequireComponent(typeof(WindZone))]
     public class LevelStateHandler : MonoBehaviour
     {
-        [Inject] private IScreenHandler _screenHandler;
+        [Inject] private IScreenHandler _handler;
         [SerializeField] private WinZone _winZone;
+        [SerializeField] private LoseZone _loseZone;
 
         private void OnValidate()
         {
@@ -24,15 +25,24 @@ namespace Core.Handlers
             _winZone.OnWin.
                 Subscribe(player => Win(player)).
                 AddTo(this);
+            
+            _loseZone.OnLose.
+                Subscribe(player => Lose(player)).
+                AddTo(this);
         }
 
         private void Win(PlayerInstance player)
         {
-            _screenHandler.SetScreen(ScreenType.WinScreen);
-            var screen = _screenHandler.GetScreen<WinScreen>(ScreenType.WinScreen);
+            _handler.SetScreen(ScreenType.WinScreen);
+            var screen = _handler.GetScreen<WinScreen>(ScreenType.WinScreen);
             
             screen.ShowLevelResult();
             player.StateHandler.DisableAllComponents();
+        }
+
+        private void Lose(PlayerInstance player)
+        {
+            _handler.SetScreen(ScreenType.LoseScreen);
         }
     }
 }

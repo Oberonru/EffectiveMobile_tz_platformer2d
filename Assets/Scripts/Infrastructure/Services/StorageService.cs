@@ -85,6 +85,15 @@ namespace Infrastructure.Services
             }
         }
 
+        public void ClearStorage()
+        {
+            GameData = new GameData();
+
+            if (File.Exists(_filePath))
+            {
+                File.Delete(_filePath);
+            }
+        }
 
         private bool IsReady()
         {

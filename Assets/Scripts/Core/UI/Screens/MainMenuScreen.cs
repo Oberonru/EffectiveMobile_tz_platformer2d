@@ -13,6 +13,7 @@ namespace Core.UI.Screens
     {
         [Inject] private IScreenHandler _handler;
         [Inject] private SceneLoaderService _loader;
+        [Inject] private StorageService _storage;
         
         [SerializeField] private Button _play;
         [SerializeField] private Button _settings;
@@ -22,7 +23,7 @@ namespace Core.UI.Screens
         {
             _play.onClick.
                 AsObservable().
-                Subscribe(_ => _loader.LoadScene(SceneName.Level1.ToString())).
+                Subscribe(_ => BeginGame()).
                 AddTo(this);
 
             _settings.onClick.
@@ -34,6 +35,12 @@ namespace Core.UI.Screens
                 AsObservable().
                 Subscribe(_ => Exit()).
                 AddTo(this);
+        }
+
+        private void BeginGame()
+        {
+            _storage.ClearStorage();
+            _loader.LoadScene(SceneName.Level1.ToString());
         }
 
         private void Exit()

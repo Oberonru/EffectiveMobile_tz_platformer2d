@@ -29,6 +29,7 @@ namespace Core.Player.Components
         private Rigidbody2D _rigidbody;
         private Vector2 _moveInput;
         private bool _isJumping;
+        private PlayerInput _playerInput;
 
         public Vector2 MoveInput => _moveInput;
 
@@ -42,6 +43,7 @@ namespace Core.Player.Components
 
         private void Awake()
         {
+            _playerInput  = GetComponent<PlayerInput>();
             if (_rigidbody == null) _rigidbody = GetComponent<Rigidbody2D>();
         }
 
@@ -111,16 +113,22 @@ namespace Core.Player.Components
                 Attack();
         }
 
-        public void Enable() => enabled = true;
+        public void Enable()
+        {
+            enabled = true;
+            if (_playerInput != null)
+            {
+                _playerInput.enabled = true;
+            }
+        }
 
         public void Disable()
         {
             enabled = false;
 
-            var input = GetComponent<PlayerInput>();
-            if (input != null)
+            if (_playerInput != null)
             {
-                input.enabled = false;
+                _playerInput.enabled = false;
             }
         }
 

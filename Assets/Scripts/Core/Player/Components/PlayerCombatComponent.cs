@@ -41,7 +41,7 @@ namespace Core.Player.Components
 
             _player.PlayerController.AttackStream.
                 Where(_ => _target != null).
-                Subscribe(_ => AttackHandle())
+                Subscribe(_ => AttackTarget())
                 .AddTo(this);
 
             _player.Health.OnHit.
@@ -58,10 +58,10 @@ namespace Core.Player.Components
 
         private void HandleIncomingHit(DamageContext ctx)
         {
-            ThrowingPlayer(ctx);
+            ThrowingSelf(ctx);
         }
 
-        private void ThrowingPlayer(DamageContext ctx)
+        private void ThrowingSelf(DamageContext ctx)
         {
             var direction = (_player.transform.position - (Vector3)ctx.AttackerPosition).normalized;
             direction = new Vector3(direction.x, 0, direction.z);
@@ -82,7 +82,7 @@ namespace Core.Player.Components
             _player.PlayerController.Enable();
         }
         
-        private void AttackHandle()
+        private void AttackTarget()
         {
             if (_currentHitBox == null || _target == null) return;
 

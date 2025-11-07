@@ -26,7 +26,7 @@ namespace Core.Enemies.Components
                 _gameData = await _storage.Load();
                 await UniTask.WaitUntil(() => _gameData != null);
 
-                _enemyData = _gameData.Enemies.FirstOrDefault(e => e.CurrentHealth > 0);
+                _enemyData = _gameData.Enemies.FirstOrDefault(e => e.Level == _enemy.Stats.Level);
 
                 if (_enemyData == null)
                 {

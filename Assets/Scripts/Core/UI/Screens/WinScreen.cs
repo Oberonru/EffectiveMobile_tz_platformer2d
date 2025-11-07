@@ -44,7 +44,7 @@ namespace Core.UI.Screens
         {
             _heading.text = "Уровень пройден - поехали дальше!";
             _moneyReciewed.text = "Очков собрано";
-            _hardMoneyReciewedValue.text = _storage.GameData.PlayerData.PlayerMoney.ToString();
+            _moneyReciewedValue.text = _storage.GameData.PlayerData.PlayerMoney.ToString();
             _hardMoneyReciewed.text = "Кристалов заработано";
             _hardMoneyReciewedValue.text = "//TODO: заглушка";
             _itemReciewed.text = "Предметов собрано";

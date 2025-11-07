@@ -1,9 +1,9 @@
-﻿using System.Runtime.InteropServices;
-using Core.Configs.Audio;
+﻿using Core.Configs.Audio;
 using Core.Gameplay;
 using Core.Model;
 using Core.Player;
 using Core.UI.Screens;
+using Infrastructure.Services;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -16,6 +16,8 @@ namespace Core.Handlers
         [Inject] private IAudioHandler _audioHandler;
         [Inject] private AudioClipsConfig _audioClipsConfig;
         [Inject] private IScreenHandler _handler;
+        [Inject] private StorageService _storage;
+
         [SerializeField] private WinZone _winZone;
         [SerializeField] private LoseZone _loseZone;
 
@@ -37,6 +39,8 @@ namespace Core.Handlers
 
         private void Win(PlayerInstance player)
         {
+            SaveLevelPoints();
+            
             _handler.SetScreen(ScreenType.WinScreen);
             var screen = _handler.GetScreen<WinScreen>(ScreenType.WinScreen);
             
@@ -53,6 +57,11 @@ namespace Core.Handlers
             player.StateHandler.DisableAllComponents();
             _audioHandler.StopMusic();
             _audioHandler.PlaySfx(_audioClipsConfig.GameOver);
+        }
+
+        private void SaveLevelPoints()
+        {
+         _storage.Save();
         }
     }
 }

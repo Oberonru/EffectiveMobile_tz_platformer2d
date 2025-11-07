@@ -15,7 +15,7 @@ namespace Core.Handlers
 
        private void OnEnable()
        {
-           _player.ItemDetector.OnPickUp.
+           _player.ItemDetector.OnEnter.
                DistinctUntilChanged().
                Where(item => item != null && _player != null).
                Subscribe(item => item.PickUp(_player)).

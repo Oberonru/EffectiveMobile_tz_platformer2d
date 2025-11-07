@@ -6,14 +6,14 @@ namespace Core.Interfaces
 {
     public class ItemDetector : MonoBehaviour
     {
-        public IObservable<IPickUp> OnPickUp => _itemObject;
-        private Subject<IPickUp> _itemObject = new();
+        public IObservable<IPickUp> OnEnter => _onEnter;
+        private Subject<IPickUp> _onEnter = new();
 
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.TryGetComponent(out IPickUp pickUp))
             {
-                _itemObject.OnNext(pickUp);
+                _onEnter.OnNext(pickUp);
             }
         }
 

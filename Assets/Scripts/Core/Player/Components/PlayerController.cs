@@ -22,6 +22,9 @@ namespace Core.Player.Components
 
         public IObservable<Unit> JumpStream => _jumpStream;
         private readonly Subject<Unit> _jumpStream = new();
+        
+        public IReadOnlyReactiveProperty<float> InteractStream => _interactStream;
+        private readonly ReactiveProperty<float> _interactStream = new();
 
         public IObservable<Unit> AttackStream => _attackStream;
         private readonly Subject<Unit> _attackStream = new();
@@ -111,6 +114,11 @@ namespace Core.Player.Components
         {
             if (IsGrounded())
                 Attack();
+        }
+
+        public void OnInteract(InputValue value)
+        {
+            _interactStream.Value = 1f;
         }
 
         public void Enable()

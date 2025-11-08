@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Items.Feature
+namespace Core.Items.Behavior
 {
     public class MovingPlatform : MonoBehaviour
     {

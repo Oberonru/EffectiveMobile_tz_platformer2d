@@ -1,8 +1,9 @@
 ﻿using Core.Player;
+using Core.UI.Views;
 using UniRx;
 using UnityEngine;
 
-namespace Core.UI
+namespace Core.UI.Handlers
 {
     public class HealthViewHandler : MonoBehaviour
     {

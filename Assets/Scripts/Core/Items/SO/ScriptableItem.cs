@@ -1,5 +1,4 @@
 ﻿using Core.Items.ItemObjects;
-using Core.Player;
 using Infrastructure.SO;
 using UnityEngine;
 

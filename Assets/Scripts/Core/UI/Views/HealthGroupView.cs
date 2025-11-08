@@ -2,7 +2,7 @@
 using Core.Player;
 using UnityEngine;
 
-namespace Core.UI
+namespace Core.UI.Views
 {
     public class HealthGroupView : MonoBehaviour
     {

@@ -1,5 +1,6 @@
 ﻿using Core.Player;
 using Core.UI;
+using Core.UI.Views;
 using UnityEngine;
 using UniRx;
 

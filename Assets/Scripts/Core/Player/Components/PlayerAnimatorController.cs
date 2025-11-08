@@ -14,9 +14,6 @@ namespace Core.Player.Components
         private static readonly int AttackHash = Animator.StringToHash("Attack");
         private static readonly int DeathHash = Animator.StringToHash("IsDeath");
 
-        // Порог для фильтрации мелких дрожаний скорости
-        private const float SpeedThreshold = 0.05f;
-
         private void OnEnable()
         {
             _player.PlayerController.JumpStream

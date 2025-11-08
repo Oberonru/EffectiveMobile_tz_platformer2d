@@ -2,16 +2,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.UI
+namespace Core.UI.Views
 {
-    public class MoneyView : MonoBehaviour
+    public class ItemsView : MonoBehaviour
     {
         [SerializeField] private Image _image;
         [SerializeField] private TextMeshProUGUI _text;
         
-        public void SetMoney(int money)
+        public void SetItem(string text)
         {
-            _text.text = money.ToString();
+            _text.text = text;
         }
     }
 }

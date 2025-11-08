@@ -9,11 +9,13 @@ namespace Core.Items.SO
     public class CoinPickUpBehavior : ScriptablePickUpBehavior
     {
         public override void Execute(PlayerInstance player, ScriptableItem item, IAudioHandler handler,
-            AudioClipsConfig config)
+            AudioClipsConfig config, GameObject go)
         {
             player.DataHandler.AddMoney(item.Amount);
 
             handler.PlaySfx(config.PickUpCoins);
+
+            Destroy(go);
         }
     }
 }

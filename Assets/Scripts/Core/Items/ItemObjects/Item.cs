@@ -7,10 +7,12 @@ namespace Core.Items.ItemObjects
     public class Item
     {
         private ScriptableItem _reference;
+        private int _count;
 
-        public Item(ScriptableItem scriptableItem)
+        public Item(ScriptableItem scriptableItem,  int count)
         {
             _reference = scriptableItem;
+            _count = count;
         }
     }
 }

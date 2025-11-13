@@ -60,8 +60,10 @@ namespace Core.Player.Components
             var stats = _player.Stats;
             var health = _player.Health;
 
-            health.InitMaxHealth(stats.MaxHealth + stats.PlayerLevel);
-            health.CurrentHealth = stats.MaxHealth;
+            var maxHealth = stats.MaxHealth + stats.PlayerLevel;
+            
+            health.InitMaxHealth(maxHealth);
+            health.CurrentHealth = maxHealth;
         }
     }
 }

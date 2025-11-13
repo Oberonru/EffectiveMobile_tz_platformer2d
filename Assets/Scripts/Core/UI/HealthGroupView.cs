@@ -13,7 +13,7 @@ namespace Core.UI
 
         private void OnValidate()
         {
-            if (_player == null) _player = GetComponent<PlayerInstance>();
+            if (_player == null) _player = FindObjectOfType<PlayerInstance>();
         }
         
         public void Start()

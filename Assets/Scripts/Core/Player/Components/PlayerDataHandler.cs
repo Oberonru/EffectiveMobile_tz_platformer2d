@@ -1,6 +1,8 @@
 ﻿using System;
+using Core.Items.SO;
 using Cysharp.Threading.Tasks;
 using Infrastructure.Services;
+using Storage.Model;
 using UniRx;
 using UnityEngine;
 using Zenject;
@@ -44,6 +46,13 @@ namespace Core.Player.Components
             _storage.GameData.PlayerData.PlayerMoney += money;
 
             _money.Value = _storage.GameData.PlayerData.PlayerMoney;
+        }
+
+        public void AddItem(ScriptableItem item)
+        {
+            var itemData = new ItemData(item.Amount);
+            
+            _storage.GameData.PlayerData.Items.Add(itemData);
         }
 
         private void InitHealth()

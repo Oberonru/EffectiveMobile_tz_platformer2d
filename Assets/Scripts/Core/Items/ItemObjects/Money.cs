@@ -3,6 +3,7 @@ using Core.Handlers;
 using Core.Interfaces;
 using Core.Items.SO;
 using Core.Player;
+using Infrastructure.Services;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +13,7 @@ namespace Core.Items.ItemObjects
     {
         [Inject] private IAudioHandler _handler;
         [Inject] private AudioClipsConfig _config;
+        [Inject] private StorageService _storage;
         [SerializeField] private ScriptableItem _scriptableItem;
         [SerializeField] private float _rotateSpeed = 100f;
 
@@ -22,7 +24,7 @@ namespace Core.Items.ItemObjects
 
         public void PickUp(PlayerInstance player)
         {
-            _scriptableItem.Behavior.Execute(player, this, _scriptableItem, _handler, _config);
+            _scriptableItem.Behavior.Execute(player, this, _scriptableItem, _handler, _config, _storage);
             Destroy(gameObject);
         }
 

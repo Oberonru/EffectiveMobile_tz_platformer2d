@@ -26,6 +26,9 @@ namespace Core.Player.Components
         public IObservable<Unit> AttackStream => _attackStream;
         private readonly Subject<Unit> _attackStream = new();
 
+        public IObservable<Unit> InteractStream => _onInteract;
+        private readonly Subject<Unit> _onInteract = new();
+
         private Rigidbody2D _rigidbody;
         private Vector2 _moveInput;
         private bool _isJumping;
@@ -43,7 +46,7 @@ namespace Core.Player.Components
 
         private void Awake()
         {
-            _playerInput  = GetComponent<PlayerInput>();
+            _playerInput = GetComponent<PlayerInput>();
             if (_rigidbody == null) _rigidbody = GetComponent<Rigidbody2D>();
         }
 
@@ -111,6 +114,12 @@ namespace Core.Player.Components
         {
             if (IsGrounded())
                 Attack();
+        }
+
+        public void OnInteract(InputValue value)
+        {
+            if (value.isPressed)
+                _onInteract.OnNext(Unit.Default);
         }
 
         public void Enable()

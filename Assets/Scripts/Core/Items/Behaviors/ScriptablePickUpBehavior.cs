@@ -3,6 +3,7 @@ using Core.Handlers;
 using Core.Items.ItemObjects;
 using Core.Items.SO;
 using Core.Player;
+using Infrastructure.Services;
 using Infrastructure.SO;
 
 namespace Core.Items.Behaviors
@@ -10,6 +11,6 @@ namespace Core.Items.Behaviors
     public abstract class ScriptablePickUpBehavior : ScriptableObjectIdentity
     {
         public abstract void Execute(PlayerInstance player,ItemObject io, ScriptableItem item, IAudioHandler handler,
-            AudioClipsConfig config);
+            AudioClipsConfig config, StorageService storage);
     }
 }

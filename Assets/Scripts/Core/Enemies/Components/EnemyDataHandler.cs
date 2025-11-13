@@ -31,7 +31,7 @@ namespace Core.Enemies.Components
                 if (_enemyData == null)
                 {
                     _enemyData = new EnemyData(
-                        1,
+                        _enemy.Stats.Level,
                         _config.BaseDamage,
                         _config.BaseMaxHealth,
                         _config.BaseMaxHealth

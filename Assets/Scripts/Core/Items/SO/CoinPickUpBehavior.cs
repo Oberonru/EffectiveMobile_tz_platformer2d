@@ -13,7 +13,7 @@ namespace Core.Items.SO
         {
             player.DataHandler.AddMoney(item.Amount);
 
-            handler.PlaySfx(config.PickUpCoins);
+            handler?.PlaySfx(config.PickUpCoins);
         }
     }
 }

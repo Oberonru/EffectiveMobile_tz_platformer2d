@@ -3,7 +3,7 @@ using Core.Items.Views;
 using UniRx;
 using UnityEngine;
 
-namespace Core.Handlers
+namespace Core.Player.Components
 {
     public class InventoryHandler : MonoBehaviour
     {

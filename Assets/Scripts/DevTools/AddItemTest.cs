@@ -1,5 +1,6 @@
 ﻿using Core.Handlers;
 using Core.Items.SO;
+using Core.Player.Components;
 using UnityEngine;
 
 namespace DevTools

@@ -1,4 +1,5 @@
 ﻿using Core.Handlers;
+using Core.Player.Components;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

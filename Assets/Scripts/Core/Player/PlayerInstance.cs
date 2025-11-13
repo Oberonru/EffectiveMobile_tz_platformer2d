@@ -17,6 +17,7 @@ namespace Core.Player
     [RequireComponent(typeof(ItemDetector))]
     [RequireComponent(typeof(PlayerDataHandler))]
     [RequireComponent(typeof(PlayerCombatComponent))]
+    [RequireComponent(typeof(InventoryHandler))]
     public class PlayerInstance : MonoBehaviour, IStateComponent
     {
         [Inject] private PlayerConfig _config;
@@ -27,6 +28,7 @@ namespace Core.Player
         [SerializeField] private ItemDetector _itemDetector;
         [SerializeField] private PlayerDataHandler _playerDataHandler;
         [SerializeField] private PlayerCombatComponent _playerCombatComponent;
+        [SerializeField] private InventoryHandler _inventoryHandler;
         public Transform Transform => transform;
         
         public PlayerConfig Stats => _config;
@@ -37,6 +39,7 @@ namespace Core.Player
         public ItemDetector ItemDetector => _itemDetector;
         public PlayerDataHandler DataHandler => _playerDataHandler;
         public PlayerCombatComponent CombatComponent => _playerCombatComponent;
+        public InventoryHandler InventoryHandler => _inventoryHandler;
 
         private void OnValidate()
         {

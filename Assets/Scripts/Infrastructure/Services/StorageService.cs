@@ -59,12 +59,16 @@ namespace Infrastructure.Services
             {
                 Debug.LogWarning("StorageService not initialized yet. Returning new PlayerData.");
                 GameData = new GameData();
+                _onLoaded?.OnNext(Unit.Default);
+                
                 return GameData;
             }
 
             if (!File.Exists(_filePath))
             {
                 GameData = new GameData();
+                _onLoaded?.OnNext(Unit.Default);
+                
                 return GameData;
             }
 
@@ -72,6 +76,7 @@ namespace Infrastructure.Services
             {
                 var json = await File.ReadAllTextAsync(_filePath);
                 GameData = JsonConvert.DeserializeObject<GameData>(json);
+                _onLoaded?.OnNext(Unit.Default);
 
                 return GameData;
             }

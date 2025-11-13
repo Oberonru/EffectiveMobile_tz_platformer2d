@@ -2,17 +2,15 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Zenject;
 
 namespace Core.Items.Views
 {
     public class InventorySlot : MonoBehaviour, IDropHandler
     {
-        [Inject]  private InventoryHandler _handler;
         [SerializeField] private Image _inventoryIcon;
         [SerializeField] private Color _selectedColor;
         [SerializeField] private Color _notSelectedColor;
-        //private InventoryHandler _handler;
+        private InventoryHandler _handler;
         private void Awake()
         {
             _handler = FindObjectOfType<InventoryHandler>();

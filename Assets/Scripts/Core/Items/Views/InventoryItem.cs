@@ -13,16 +13,22 @@ namespace Core.Items.Views
         [SerializeField] private Image _inventoryIcon;
         [SerializeField] private TextMeshProUGUI _countText;
 
+        private readonly Subject<InventorySlot> _onSlotDragStarted = new();
         public IObservable<InventorySlot> OnSlotDragStarted => _onSlotDragStarted;
-        private Subject<InventorySlot> _onSlotDragStarted = new();
 
         private int _count = 1;
         private Transform _parentAfterDrag;
+        private ScriptableItem _scriptableItem;
 
         public int Count
         {
             get => _count;
             set => _count = value;
+        }
+
+        private void Start()
+        {
+            _countText.raycastTarget = false;
         }
 
         public Transform ParentAfterDrag
@@ -31,12 +37,11 @@ namespace Core.Items.Views
             set => _parentAfterDrag = value;
         }
 
-        public ScriptableItem ScriptableItem => scriptableItem;
-        private ScriptableItem scriptableItem;
+        public ScriptableItem ScriptableItem => _scriptableItem;
 
         public void InitItem(ScriptableItem item)
         {
-            scriptableItem = item;
+            _scriptableItem = item;
             _inventoryIcon.sprite = item.Sprite;
             RefreshCount();
         }
@@ -46,8 +51,7 @@ namespace Core.Items.Views
             var slot = GetComponentInParent<InventorySlot>();
             if (slot != null)
             {
-                _onSlotDragStarted?.OnNext(slot); 
-                slot.Select();                  
+                _onSlotDragStarted.OnNext(slot);
             }
 
             _inventoryIcon.raycastTarget = false;
@@ -57,9 +61,7 @@ namespace Core.Items.Views
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            var oldSlot = _parentAfterDrag.GetComponent<InventorySlot>();
-            oldSlot?.Deselect();
-
+            // убран вызов oldSlot?.Deselect()
             _inventoryIcon.raycastTarget = true;
             transform.SetParent(_parentAfterDrag);
         }

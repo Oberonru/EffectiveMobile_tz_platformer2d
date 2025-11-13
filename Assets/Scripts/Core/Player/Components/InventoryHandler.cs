@@ -1,7 +1,8 @@
-﻿using Core.Items.SO;
-using Core.Items.Views;
-using UniRx;
+﻿using System;
 using UnityEngine;
+using UniRx;
+using Core.Items.SO;
+using Core.Items.Views;
 
 namespace Core.Player.Components
 {
@@ -12,48 +13,55 @@ namespace Core.Player.Components
         [SerializeField] private int _maxCellSize = 4;
 
         private InventorySlot _selectedSlot;
+        private InventoryItem _selectedItem;
+
+        private readonly Subject<InventorySlot> _onSlotSelected = new();
+        public IObservable<InventorySlot> OnSlotSelected => _onSlotSelected;
+
+        private readonly Subject<ScriptableItem> _onItemAdded = new();
+        public IObservable<ScriptableItem> OnItemAdded => _onItemAdded;
 
         private void Start()
         {
             _selectedSlot = null;
-        }
-        
-        public void AddItem(ScriptableItem item)
-        {
-            for (var i = 0; i < _slots.Length; i++)
-            {
-                var slot = _slots[i];
+            _selectedItem = null;
 
+            OnSlotSelected.Subscribe(ChangeSelectedSlot).AddTo(this);
+        }
+
+
+        public bool AddItem(ScriptableItem item)
+        {
+            if (item == null) return false;
+
+            foreach (var slot in _slots)
+            {
                 var inventoryItem = slot.GetComponentInChildren<InventoryItem>();
-                if (inventoryItem != null && inventoryItem.ScriptableItem != null &&
-                    inventoryItem.ScriptableItem == item && inventoryItem.ScriptableItem.IsStackable &&
+                if (inventoryItem != null &&
+                    inventoryItem.ScriptableItem == item &&
+                    inventoryItem.ScriptableItem.IsStackable &&
                     inventoryItem.Count < _maxCellSize)
                 {
                     inventoryItem.Count++;
                     inventoryItem.RefreshCount();
+
+                    _onItemAdded.OnNext(item);
+                    return true;
                 }
             }
 
-            for (var i = 0; i < _slots.Length; i++)
+            foreach (var slot in _slots)
             {
-                var slot = _slots[i];
-
-                var itemInventory = slot.GetComponentInChildren<InventoryItem>();
-                if (itemInventory == null)
+                var inventoryItem = slot.GetComponentInChildren<InventoryItem>();
+                if (inventoryItem == null)
                 {
                     SpawnItem(item, slot);
-                    return;
+                    _onItemAdded.OnNext(item);
+                    return true;
                 }
             }
-        }
-        
-        public void ChangeSelectedSlot(InventorySlot slot)
-        {
-            if (_selectedSlot != null)
-                _selectedSlot.Deselect();
 
-            slot.Select();
-            _selectedSlot = slot;
+            return false;
         }
 
         private void SpawnItem(ScriptableItem item, InventorySlot slot)
@@ -61,7 +69,30 @@ namespace Core.Player.Components
             var inventoryItem = Instantiate(_inventoryPrefab, slot.transform);
             inventoryItem.InitItem(item);
 
-            inventoryItem.OnSlotDragStarted.Subscribe(ChangeSelectedSlot).AddTo(this);
+            inventoryItem.OnSlotDragStarted
+                .Subscribe(_onSlotSelected.OnNext)
+                .AddTo(this);
+        }
+
+        public void SelectSlot(InventorySlot slot)
+        {
+            _onSlotSelected.OnNext(slot);
+        }
+
+        private void ChangeSelectedSlot(InventorySlot slot)
+        {
+            if (_selectedSlot != null)
+                _selectedSlot.Deselect();
+
+            _selectedSlot = slot;
+            _selectedSlot.Select();
+
+            _selectedItem = _selectedSlot.GetComponentInChildren<InventoryItem>();
+        }
+
+        public ScriptableItem GetSelectedItem()
+        {
+            return _selectedItem != null ? _selectedItem.ScriptableItem : null;
         }
     }
 }

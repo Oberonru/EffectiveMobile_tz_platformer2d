@@ -1,4 +1,5 @@
-﻿using Core.Items.ItemObjects;
+﻿using Core.Items.Behaviors;
+using Core.Items.ItemObjects;
 using Infrastructure.SO;
 using UnityEngine;
 

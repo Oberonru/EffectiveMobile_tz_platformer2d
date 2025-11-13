@@ -8,7 +8,7 @@ using Zenject;
 
 namespace Core.Items.ItemObjects
 {
-    public class Money : MonoBehaviour, IPickUp
+    public class Money :  ItemObject
     {
         [Inject] private IAudioHandler _handler;
         [Inject] private AudioClipsConfig _config;
@@ -22,7 +22,7 @@ namespace Core.Items.ItemObjects
 
         public void PickUp(PlayerInstance player)
         {
-            _scriptableItem.Behavior.Execute(player, _scriptableItem, _handler, _config);
+            _scriptableItem.Behavior.Execute(player, this, _scriptableItem, _handler, _config);
             Destroy(gameObject);
         }
 

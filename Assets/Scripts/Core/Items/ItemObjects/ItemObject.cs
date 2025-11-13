@@ -7,8 +7,8 @@ namespace Core.Items.ItemObjects
 {
     public class ItemObject : MonoBehaviour, IPickUp
     {
-        [SerializeField] private ScriptableItem _scriptableItem;
         [SerializeField] private SpriteRenderer _itemIcon;
+        [SerializeField] private ScriptableItem _scriptableItem;
         public ScriptableItem ScriptableItem => _scriptableItem;
 
         private void Start()
@@ -18,10 +18,7 @@ namespace Core.Items.ItemObjects
 
         public void PickUp(PlayerInstance player)
         {
-            player.InventoryHandler.AddItem(_scriptableItem);
-            _scriptableItem.Behavior.Execute(player, _scriptableItem, null, null);
-            
-            Destroy(gameObject);
+            _scriptableItem.Behavior.Execute(player, this, _scriptableItem, null, null);
         }
     }
 }

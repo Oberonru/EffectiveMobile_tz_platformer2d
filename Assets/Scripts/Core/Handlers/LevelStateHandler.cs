@@ -10,7 +10,6 @@ using Zenject;
 
 namespace Core.Handlers
 {
-    [RequireComponent(typeof(WindZone))]
     public class LevelStateHandler : MonoBehaviour
     {
         [Inject] private IAudioHandler _audioHandler;

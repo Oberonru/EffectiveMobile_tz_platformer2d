@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Core.Items.Behaviors
 {
     [CreateAssetMenu(menuName = "Items/Behavior/MoneyPickUpBehavior", fileName = "MoneyPickUpBehavior")]
-    public class MoneyPickUpBehavior : ScriptablePickUpBehavior
+    public class CoinPickUpBehavior : ScriptablePickUpBehavior
     {
         public override void Execute(PlayerInstance player,ItemObject io, ScriptableItem item, IAudioHandler handler,
             AudioClipsConfig config, StorageService storage)

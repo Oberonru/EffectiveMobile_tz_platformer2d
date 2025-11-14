@@ -17,12 +17,14 @@ namespace Core.Handlers
         [Inject] private IScreenHandler _handler;
         [Inject] private StorageService _storage;
 
+        [SerializeField] private PlayerInstance _player;
         [SerializeField] private WinZone _winZone;
         [SerializeField] private LoseZone _loseZone;
 
         private void OnValidate()
         {
             if (_winZone == null) _winZone = FindObjectOfType<WinZone>();
+            if (_player == null) _player = FindObjectOfType<PlayerInstance>();
         }
 
         private void OnEnable()
@@ -34,6 +36,8 @@ namespace Core.Handlers
             _loseZone.OnLose.
                 Subscribe(player => Lose(player)).
                 AddTo(this);
+            
+            _player.Health.OnDead.Subscribe(_ => Lose(_player)).AddTo(this);
         }
 
         private void Win(PlayerInstance player)

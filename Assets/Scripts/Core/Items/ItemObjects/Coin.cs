@@ -5,7 +5,7 @@ using Core.Player;
 using UnityEngine;
 using Zenject;
 
-namespace Core.Items
+namespace Core.Items.ItemObjects
 {
     public class Coin : MonoBehaviour, IPickUp
     {

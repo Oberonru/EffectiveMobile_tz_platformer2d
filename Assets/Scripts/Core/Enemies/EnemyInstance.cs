@@ -1,4 +1,5 @@
-﻿using Core.BaseComponents;
+﻿using System;
+using Core.BaseComponents;
 using Core.Configs.Enemy;
 using Core.Enemies.Components;
 using Core.Handlers;
@@ -18,11 +19,14 @@ namespace Core.Enemies
         [SerializeField] private HealthComponent _health;
         [SerializeField] private EnemyDataHandler _dataHandler;
         public Transform Transform => transform;
+        public string ID => _id;
+        
         
         public EnemyConfig Stats => _enemyConfig;
         public Rigidbody2D Rigidbody => _rigidbody;
         public HealthComponent Health => _health;
         public EnemyDataHandler DataHandler => _dataHandler;
+        private string _id = Guid.NewGuid().ToString();
 
         private void OnValidate()
         {

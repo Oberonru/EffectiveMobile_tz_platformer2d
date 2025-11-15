@@ -14,6 +14,13 @@
       "dependencies": {},
       "hash": "6baeccf6c544c155497164327cca72f28163a578"
     },
+    "com.newtonsoft.json": {
+      "version": "https://github.com/PixelWizards/com.newtonsoft.json.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "f434e27dd00a8c6092fbd847b22aef0799e2dd21"
+    },
     "com.unity.2d.animation": {
       "version": "9.2.0",
       "depth": 1,
@@ -198,6 +205,13 @@
     "com.unity.mathematics": {
       "version": "1.2.6",
       "depth": 2,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.2",
+      "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using Cysharp.Threading.Tasks;
+using Newtonsoft.Json;
 using Storage.Model;
 using UniRx;
-using Unity.Plastic.Newtonsoft.Json;
 using UnityEngine;
 using Zenject;
 
